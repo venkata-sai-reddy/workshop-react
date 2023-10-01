@@ -1,0 +1,27 @@
+#home_navbar{
+    background-color: #CC0000;
+    place-self: center;
+}
+
+#home_logo{
+    max-width: 50px;
+    max-height: 50px;
+}
+
+.home_app_name {
+    font-size: xx-large;
+    color: white;
+    font-weight: bolder;
+}
+
+#home_logout{
+    font-size: x-large;
+    color: whitesmoke;
+    text-align: end;
+}
+
+#home_user_name{
+    font-size: larger;
+    color: whitesmoke;
+    place-self: center;
+}

@@ -1,0 +1,40 @@
+#login_container{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#login_container_header{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 5px;
+}
+
+#login_container_errors{
+    padding-bottom: 15px;
+    padding-top:10px;
+}
+
+#login_container_form{
+    margin-top: 10px;
+    padding: 5px;
+}
+
+#login_container_links{
+    padding: 10px;
+    text-align: center;
+}
+
+.login_form_fields{
+    text-align: center;
+    padding-bottom: 10px !important;
+    margin-bottom: 5px !important;
+    padding-right: 5px !important;
+}
+
+#login_form_button{
+    padding-left: 20px;
+    padding-right: 20px;
+    margin: 10px;
+}
