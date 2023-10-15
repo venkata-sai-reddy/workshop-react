@@ -1,24 +1,23 @@
 import React, { useState } from 'react';
-import { Col, Container, Row } from "react-bootstrap";
 import { Link, useNavigate } from 'react-router-dom'; // Import useHistory
 import './Login.css';
 import { useForm } from "react-hook-form";
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup'
-import { TextField, Typography, Button } from '@material-ui/core';
+import { TextField, Typography, Button, Grid } from '@mui/material';
 import { doLogin } from '../../../store/actions/PreLoginActions'
 import { useDispatch } from 'react-redux';
 import { saveUser } from '../../../store/reducers/UserReducers'
 
 export const LoginComponent = () => {
     const schema = yup.object().shape({
-        emailId: yup.string().email("Please enter valid email id").required("Please enter username"),
+        emailId: yup.string().required("Please enter email Id").email("Please enter valid email id"),
         password: yup.string().min(8, "Password must be at least 8 characters").required("Please enter password")
     });
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [responseError, setResponseError] = useState({});
-    
+    const [responseError, setResponseError] = useState(null);
+
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema)
     });
@@ -30,7 +29,7 @@ export const LoginComponent = () => {
             navigate("/home");
         } catch (error) {
             console.error('Error logging in:', error);
-            setResponseError(error.response.data);
+            setResponseError(error?.response?.data);
             setTimeout(() => {
                 setResponseError({});
             }, 10000);
@@ -38,60 +37,67 @@ export const LoginComponent = () => {
     };
 
     return (
-        <Container fluid id="login_container" className="login_container" automationId="login_container">
-            <Row id="login_container_header" className="login_container_header" automationId="login_container_header">
-                <Typography>Login, please enter your email Id & password</Typography>
-            </Row>
-            <Row id="login_container_errors" className="login_container_errors" automationId="login_container_errors">
-                <Typography align="center" color="error" >{responseError?.message}</Typography>
-            </Row>
-            <Container fluid id="login_container_form" className="login_contianer_form" automationId="login_container_form">
-                <form onSubmit={handleSubmit(onSubmit)}>
-
+        <Grid container justifyContent="center" alignItems="center" className="login_container">
+            <Grid item xs={12}>
+                <Typography id="login_container_header" className="login_container_header" automationId="login_container_header" variant="h6" align="center" gutterBottom>
+                    Login, please enter your email Id & password
+                </Typography>
+                <Typography id="login_container_errors" className="login_container_errors" automationId="login_container_errors" align="center" color="error" gutterBottom>
+                    {responseError?.message}
+                </Typography>
+                <form onSubmit={handleSubmit(onSubmit)} id="login_container_form" className="login_contianer_form" automationId="login_container_form" noValidate>
                     <TextField
+                        key="Email Id"
                         required
-                        variant="outlined"
+                        fullWidth
                         id="login_form_email"
                         className="login_form_fields"
                         automationId="login_form_email_id"
+                        variant="outlined"
                         label="Email Id"
                         placeholder="useremail@email.com"
-                        fullWidth
                         size='small'
-                        onBlur={() => { setResponseError({}) }}
                         error={!!errors.emailId}
                         helperText={errors.emailId?.message}
-                        {...register("emailId")}
+                        {...register('emailId')}
                     />
                     <TextField
+                        key="Password"
                         required
-                        variant="outlined"
+                        fullWidth
                         id="login_form_password"
                         className="login_form_fields"
                         automationId="login_form_password"
+                        variant="outlined"
+                        margin='normal'
                         label="Password"
-                        type='password'
-                        size='small'
+                        type="password"
+                        size="small"
                         placeholder="********"
-                        fullWidth
-                        onBlur={() => { setResponseError({}) }}
                         error={!!errors.password}
                         helperText={errors.password?.message}
-                        {...register("password")}
+                        {...register('password')}
                     />
-                    <div id="login_form_button">
-                        <Button type="submit" fullWidth variant="contained" color="primary" id="login_form_signin" automationId="login_form_signin">Sign In</Button>
-                    </div>
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        id="login_form_signin"
+                        automationId="login_form_signin"
+                        style={{ marginTop: '16px' }}
+                    >
+                        Sign In
+                    </Button>
                 </form>
-            </Container>
-            <Row id="login_container_links" className="login_container_links" automationId="login_container_links">
-                <Col >
-                    <Link to={'/signup'}>SignUp</Link>
-                </Col>
-                <Col >
-                    <Link to={'/forget-password'}>Forget Password?</Link>
-                </Col>
-            </Row>
-        </Container>
+                <Grid container justifyContent="space-around" alignItems="center" id="login_container_links" className="login_container_links" automationId="login_container_links">
+                    <Grid item>
+                        First time here? <Link to={'/signup'}>Sign Up</Link>
+                    </Grid>
+                    <Grid item>
+                        <Link to={'/forget-password'}>Forget Password?</Link>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
     );
 };

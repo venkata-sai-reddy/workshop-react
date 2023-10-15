@@ -6,35 +6,33 @@
 }
 
 #login_container_header{
-    margin-top: 5px;
-    margin-bottom: 5px;
-    padding: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-bottom: 0px;
+    text-align: center;
 }
 
 #login_container_errors{
-    padding-bottom: 15px;
-    padding-top:10px;
+    padding-right: 15px;
+    padding-left:10px;
+    padding-top: 10px;
 }
 
 #login_container_form{
-    margin-top: 10px;
     padding: 5px;
+    padding-left: 15px;
+    padding-right: 20px;
+    margin-left: 15px;
+    margin-right: 20px;
+    text-align: center;
 }
 
 #login_container_links{
-    padding: 10px;
     text-align: center;
+    margin-top: 16px;
 }
 
 .login_form_fields{
     text-align: center;
-    padding-bottom: 10px !important;
-    margin-bottom: 5px !important;
-    padding-right: 5px !important;
-}
-
-#login_form_button{
-    padding-left: 20px;
-    padding-right: 20px;
-    margin: 10px;
+    border-radius: 30px;
 }
