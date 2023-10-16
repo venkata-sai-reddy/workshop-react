@@ -133,7 +133,7 @@ const AddWorkshop = () => {
                         <FormControl fullWidth>
                             <TextField
                                 id='create_workshop_title_field'
-                                automationId='create_workshop_title_field'
+                                inputProps={{ automationId:'create_workshop_title_field'}}
                                 label="Workshop Title *"
                                 {...register('workshopName', { required: 'Title is required' })}
                                 error={!!errors.workshopName}
@@ -146,7 +146,7 @@ const AddWorkshop = () => {
                         <FormControl fullWidth>
                             <TextField
                                 id='create_workshop_description_field'
-                                automationId='create_workshop_description_field'
+                                inputProps={{automationId:'create_workshop_description_field'}}
                                 label="Description"
                                 multiline
                                 rows={6}
@@ -179,7 +179,7 @@ const AddWorkshop = () => {
                                 renderInput={(params) => (
                                     <TextField
                                         id='create_workshop_skills_field'
-                                        automationId='create_workshop_skills_field'
+                                        inputProps={{automationId:'create_workshop_skills_field'}}
                                         {...params}
                                         label="Skills *"
                                         error={!!fieldState.error}
@@ -202,7 +202,7 @@ const AddWorkshop = () => {
                                 {...register('venue', { required: 'Venue is required' })}
                                 renderInput={(params) => (
                                     <TextField {...params} id='create_workshop_venue_field'
-                                        automationId='create_workshop_venue_field' label="Venue" name="venue" fullWidth />
+                                    inputProps={{automationId:'create_workshop_venue_field'}} label="Venue" name="venue" fullWidth />
                                 )}
                             />
                         </FormControl>
@@ -212,7 +212,7 @@ const AddWorkshop = () => {
                         <FormControl fullWidth>
                             <TextField
                                 id='create_workshop_capacity_field'
-                                automationId='create_workshop_capacity_field'
+                                inputProps={{automationId:'create_workshop_capacity_field'}}
                                 label="Capacity"
                                 type="number"
                                 {...register('capacity')}
@@ -226,14 +226,13 @@ const AddWorkshop = () => {
                         <FormControl fullWidth>
                             <TextField
                                 id='create_workshop_date_field'
-                                automationId='create_workshop_date_field'
                                 label="Workshop Date *"
                                 type="date"
                                 InputLabelProps={{
                                     shrink: true,
                                 }}
                                 {...register('workshopDate', { required: 'Date is required' })}
-                                inputProps={{ min: new Date().toISOString().split('T')[0] }}
+                                inputProps={{ automationId:'create_workshop_date_field', min: new Date().toISOString().split('T')[0] }}
                                 error={!!errors.workshopDate}
                                 helperText={errors.workshopDate?.message}
                             />
@@ -244,7 +243,7 @@ const AddWorkshop = () => {
                         <FormControl fullWidth>
                             <TextField
                                 id='create_workshop_start_time_field'
-                                automationId='create_workshop_start_time_field'
+                                inputProps={{automationId:'create_workshop_start_time_field'}}
                                 label="Start Time *"
                                 type="time"
                                 InputLabelProps={{
@@ -263,7 +262,7 @@ const AddWorkshop = () => {
                         <FormControl fullWidth>
                             <TextField
                                 id='create_workshop_end_time_field'
-                                automationId='create_workshop_end_time_field'
+                                inputProps={{automationId:'create_workshop_end_time_field'}}
                                 label="End Time *"
                                 type="time"
                                 InputLabelProps={{

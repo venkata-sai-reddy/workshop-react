@@ -195,6 +195,7 @@ function NavigationBar(props) {
               aria-controls="menu-appbar"
               aria-haspopup="true"
               color="inherit"
+              automationId='home_user_avatar_button'
               onClick={handleOpenUserMenu}>
                 <Avatar automationId='home_user_avatar' alt={user?.firstName} src="/broken-image.jpg" />
               </IconButton>
@@ -217,7 +218,7 @@ function NavigationBar(props) {
             >
               {profiles.map(([page, url]) => (
                 <MenuItem key={page} onClick={() => handleMenuItemClick(url, handleCloseUserMenu, false)}>
-                  <Typography textAlign="center">{page}</Typography>
+                  <Typography textAlign="center" automationId={`home_user_`+page}>{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>

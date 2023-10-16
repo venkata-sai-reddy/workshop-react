@@ -11,8 +11,8 @@ import { saveUser } from '../../../store/reducers/UserReducers'
 
 export const LoginComponent = () => {
     const schema = yup.object().shape({
-        emailId: yup.string().required("Please enter email Id").email("Please enter valid email id"),
-        password: yup.string().min(8, "Password must be at least 8 characters").required("Please enter password")
+        emailId: yup.string().required("Please enter email Id").email("Please enter valid email Id"),
+        password: yup.string().required("Please enter password").min(8, "Password must be at least 8 characters")
     });
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -37,7 +37,7 @@ export const LoginComponent = () => {
     };
 
     return (
-        <Grid container justifyContent="center" alignItems="center" className="login_container">
+        <Grid container justifyContent="center" alignItems="center" automationId="login_container" className="login_container">
             <Grid item xs={12}>
                 <Typography id="login_container_header" className="login_container_header" automationId="login_container_header" variant="h6" align="center" gutterBottom>
                     Login, please enter your email Id & password
@@ -48,11 +48,11 @@ export const LoginComponent = () => {
                 <form onSubmit={handleSubmit(onSubmit)} id="login_container_form" className="login_contianer_form" automationId="login_container_form" noValidate>
                     <TextField
                         key="Email Id"
+                        inputProps={{ automationId: "login_form_email_id" }}
                         required
                         fullWidth
                         id="login_form_email"
                         className="login_form_fields"
-                        automationId="login_form_email_id"
                         variant="outlined"
                         label="Email Id"
                         placeholder="useremail@email.com"
@@ -67,7 +67,7 @@ export const LoginComponent = () => {
                         fullWidth
                         id="login_form_password"
                         className="login_form_fields"
-                        automationId="login_form_password"
+                        inputProps={{ automationId: "login_form_password" }}
                         variant="outlined"
                         margin='normal'
                         label="Password"
