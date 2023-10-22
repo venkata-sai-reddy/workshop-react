@@ -12,7 +12,7 @@ export const userSlice = createSlice({
         saveUser: (state, action) => {
             state.value.isUserAuthenticated = action.payload.status === 200 ? true : false;
             state.value.user = action.payload.data;
-            localStorage.setItem('session', state.value.user.session);
+            localStorage.setItem("sessionid", JSON.stringify(state?.value?.user?.session?.sessionId));
         },
         doLogout: (state, action) => {
             state.value.isUserAuthenticated = false;
