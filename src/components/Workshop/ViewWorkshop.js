@@ -400,7 +400,7 @@ const ViewWorkshop = () => {
               </LocalizationProvider>
             ) : (
               <Typography variant="body1">
-                Workshop Date: {new Date(updatedWorkshop.workshopDate).toLocaleDateString('en-US', {
+                Workshop Date: {new Date(`${updatedWorkshop.workshopDate}T12:00:00Z`).toLocaleString('en-US', {
                   year: 'numeric',
                   month: 'long',
                   day: 'numeric',
