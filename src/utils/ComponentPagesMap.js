@@ -5,7 +5,8 @@ export const componentsMap = {
         '/view-registered-workshops',
         '/update-workshop',
         '/delete-workshop',
-        '/view-workshop'
+        '/view-workshop',
+        '/view-requested-workshops'
     ],
     
 }

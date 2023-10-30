@@ -1,0 +1,539 @@
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import {
+  Container,
+  Paper,
+  Typography,
+  Grid,
+  Divider,
+  IconButton,
+  TextField,
+  Button,
+  Autocomplete,
+} from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useDispatch, useSelector } from 'react-redux';
+import { getVenues } from '../../store/actions/AdminActions';
+import { saveVenues } from '../../store/reducers/AdminReducers';
+import { DatePicker, LocalizationProvider, TimePicker, clockNumberClasses } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import SaveIcon from '@mui/icons-material/Save';
+import dayjs from 'dayjs';
+import {
+  ToastContainer,
+  toast,
+} from 'react-toastify';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogActions from '@mui/material/DialogActions';
+import { deleteWorkshop, enrollWorkshop, updateWorkshop } from '../../store/actions/WorkshopActions';
+import { convertTimetoLocalDateTime, convertToDateFormat, sessionUnAuthCheck } from '../../utils/Common';
+import { LoadingPage } from '../Loading/Loading';
+import { updateDeleteWorkshop, updateLocalWorkshop } from '../../store/reducers/WorkshopReducers';
+
+const ViewWorkshop = () => {
+  const location = useLocation();
+  const { workshop } = location.state || {};
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [isEdited, setIsEdited] = useState(false);
+  const [updatedWorkshop, setUpdatedWorkshop] = useState({ ...workshop });
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
+
+  const userState = useSelector((state) => state.user.value);
+  const [openSaveDialog, setOpenSaveDialog] = useState(false);
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+
+  const handleEditClick = () => {
+    setIsEditMode(true);
+  };
+
+  const openConfirmationDialog = () => {
+    setOpenSaveDialog(true);
+  };
+
+  const openDeleteConfirmationDialog = () => {
+    setOpenDeleteDialog(true);
+  };
+
+  const checkAnyFieldsChange = () => {
+    return ((workshop.workshopName !== updatedWorkshop.workshopName)
+      || (workshop.description !== updatedWorkshop.description)
+      || (workshop.workshopDate !== updatedWorkshop.workshopDate)
+      || (workshop.startTime !== updatedWorkshop.startTime)
+      || (workshop.endTime !== updatedWorkshop.endTime)
+      || (workshop.selectedSkills !== updatedWorkshop.selectedSkills)
+      || (workshop.capacity !== updatedWorkshop.capacity)
+      || (workshop.venue !== updatedWorkshop.venue)
+    );
+  }
+
+  const handleSaveClick = () => {
+    openConfirmationDialog();
+  }
+
+  const handleDeleteClick = () => {
+    openDeleteConfirmationDialog();
+  };
+
+  const handleSaveConfirmation = async () => {
+    setOpenSaveDialog(false);
+    setIsEdited(true);
+  };
+
+  const handleDeleteConfirmation = async () => {
+    setOpenDeleteDialog(false);
+    try {
+      const response = await deleteWorkshop(updatedWorkshop);
+      if (response.data === true) {
+        toast.success('Workshop Successfully Deleted!', {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          closeButton: false,
+          draggable: false
+        });
+        dispatch(updateDeleteWorkshop(updatedWorkshop));
+        navigate('/workshop')
+        setIsLoading(false);
+      } else {
+        setIsEdited(false);
+        toast.error('Workshop Failed to Delete', {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          closeButton: false,
+          pauseOnHover: true,
+          draggable: false
+        });
+        setUpdatedWorkshop(workshop);
+      }
+      setIsLoading(false);
+
+    } catch (error) {
+      console.error('Error updating Workshop :', error);
+      sessionUnAuthCheck(error) && navigate('/logout');
+      toast.error(error?.response?.data?.message, {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        closeButton: false,
+        pauseOnHover: true,
+        draggable: false
+      });
+      setUpdatedWorkshop(workshop);
+      setIsLoading(false);
+    }
+  };
+
+  const handleCancel = () => {
+    setOpenSaveDialog(false);
+    setUpdatedWorkshop(workshop);
+    setIsEditMode(false);
+    setOpenDeleteDialog(false);
+  };
+
+  const handleEnroll = async () => {
+    try {
+      const response = await enrollWorkshop(workshop);
+      if (response.data === true) {
+        toast.success('Workshop Enrolled Successfully!', {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          closeButton: false,
+          draggable: false
+        });
+      } else {
+        toast.error('Failed to Enroll', {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          closeButton: false,
+          pauseOnHover: true,
+          draggable: false
+        });
+      }
+    } catch (error) {
+      console.error('Error enrolling Workshop :', error);
+      sessionUnAuthCheck(error) && navigate('/logout');
+      toast.error(error?.response?.data?.message, {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        closeButton: false,
+        pauseOnHover: true,
+        draggable: false
+      });
+    }
+  }
+
+  const userSkills = useSelector((state) => state?.user?.value?.user?.skills);
+  const venues = useSelector((state) => state?.admin?.value?.venues);
+  useEffect(() => {
+    const fetchVenues = async () => {
+      try {
+        const venues = await getVenues();
+        dispatch(saveVenues(venues));
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error : ', error);
+        setIsLoading(false);
+      }
+    };
+
+    const saveWorkshop = async () => {
+      setIsLoading(true);
+      try {
+        const response = await updateWorkshop(updatedWorkshop);
+        if (response.data === true) {
+          toast.success('Workshop Successfully Updated!', {
+            position: 'top-right',
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            closeButton: false,
+            draggable: false
+          });
+          dispatch(updateLocalWorkshop(updatedWorkshop));
+          setIsLoading(false);
+        } else {
+          setUpdatedWorkshop(workshop);
+          toast.error('Workshop Failed to Update', {
+            position: 'top-right',
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            closeButton: false,
+            pauseOnHover: true,
+            draggable: false
+          });
+        }
+        setIsEdited(false);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error updating Workshop :', error);
+        setIsEdited(false);
+        sessionUnAuthCheck(error) && navigate('/logout');
+        toast.error(error?.response?.data?.message, {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          closeButton: false,
+          pauseOnHover: true,
+          draggable: false
+        });
+        setUpdatedWorkshop(workshop);
+        setIsLoading(false);
+      }
+    };
+
+    if (isEdited && checkAnyFieldsChange()) {
+      saveWorkshop();
+      setIsEditMode(false);
+      setIsEdited(false);
+    }
+    if (userState.user.userType === 'Student') {
+      setIsLoading(false);
+    } else if (isLoading && !venues) {
+      fetchVenues();
+    }
+    if (venues) {
+      setIsLoading(false);
+    }
+  }, [dispatch, isLoading, userState.user.userType, venues, isEdited, checkAnyFieldsChange, updatedWorkshop, workshop, navigate]);
+
+  const handleChange = (name, value) => {
+    if (name === 'startTime' || name === 'endTime') {
+      setUpdatedWorkshop((prevWorkshop) => ({
+        ...prevWorkshop,
+        [name]: convertTimetoLocalDateTime(prevWorkshop.workshopDate, value)
+      }));
+    }
+    setUpdatedWorkshop((prevWorkshop) => ({
+      ...prevWorkshop,
+      [name]: value,
+    }));
+    if (name === 'workshopDate') {
+      setUpdatedWorkshop((prevWorkshop) => ({
+        ...prevWorkshop,
+        [name]: convertToDateFormat(value).split("T")[0],
+      }));
+      setUpdatedWorkshop((prevWorkshop) => ({
+        ...prevWorkshop,
+        startTime: convertTimetoLocalDateTime(convertToDateFormat(value).split("T")[0], prevWorkshop.startTime),
+        endTime: convertTimetoLocalDateTime(convertToDateFormat(value).split("T")[0], prevWorkshop.endTime),
+      }));
+    }
+  };
+
+  return isLoading ? <LoadingPage /> : (
+    <Container maxWidth="md" sx={{ marginTop: 4 }}>
+      <Paper elevation={3} sx={{ padding: 3, position: 'relative' }}>
+        {userState.user.userId === workshop.createdUserId ? (
+          <div style={{ position: 'absolute', top: 10, right: 10 }}>
+            {!isEditMode && (
+              <IconButton aria-label="edit" onClick={handleEditClick} title='Edit Workshop'>
+                <EditIcon />
+              </IconButton>
+            )}
+            {isEditMode && (
+              <IconButton color="primary" aria-label="save" onClick={handleSaveClick} title='Update Workshop'>
+                <SaveIcon />
+              </IconButton>
+            )}
+
+            <IconButton color="error" aria-label="delete" onClick={handleDeleteClick} title='Delete Workshop'>
+              <DeleteIcon />
+            </IconButton>
+
+
+          </div>
+        ) : (
+          <div style={{ position: 'absolute', top: 10, right: 10 }}>
+            <Button variant="contained" color="error" onClick={handleEnroll} sx={{ fontWeight: 'bold' }}>
+              Enroll
+            </Button>
+          </div>
+        )}
+        <Typography variant="h4" gutterBottom>
+          {' '}
+          {isEditMode ? (
+            <TextField
+              name="workshopName"
+              variant="standard"
+              fullWidth
+              id="edit_workshop_title_field"
+              inputProps={{ automationId: 'edit_workshop_title_field' }}
+              label="Workshop title"
+              value={updatedWorkshop.workshopName}
+              onChange={(e) => handleChange(e.target.name, e.target.value)}
+              sx={{ marginTop: 2 }}
+            />
+          ) : (
+            updatedWorkshop.workshopName
+          )}
+        </Typography>
+        {!isEditMode && (
+          <Typography variant="subtitle1" color="textSecondary" gutterBottom>
+            Instructor: {workshop.createdUser}
+          </Typography>
+        )}
+        <Typography variant="body1" gutterBottom>
+          {' '}
+          {isEditMode ? (
+            <TextField
+              name="description"
+              fullWidth
+              id="edit_workshop_description_field"
+              inputProps={{ automationId: 'edit_workshop_description_field' }}
+              label="Description"
+              multiline
+              value={updatedWorkshop.description}
+              rows={4}
+              onChange={(e) => handleChange(e.target.name, e.target.value)}
+            />
+          ) : (
+            updatedWorkshop.description
+          )}
+        </Typography>
+        <Divider sx={{ marginY: 2 }} />
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            {isEditMode ? (
+              <Autocomplete
+                className="edit_workshop_autocomplete"
+                multiple
+                id="selectedSkills"
+                componentName="selectedSkills"
+                options={userSkills}
+                getOptionLabel={(option) => option.skillName}
+                getOptionSelected={(option, value) => option.skillId === value.skillId}
+                value={updatedWorkshop.selectedSkills}
+                onChange={(e, newValue) => {
+                  handleChange('selectedSkills', newValue);
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    variant="standard"
+                    id="edit_workshop_skills_field"
+                    inputProps={{ automationId: 'edit_workshop_skills_field' }}
+                    {...params}
+                    label="Skills"
+                    fullWidth
+                  />
+                )}
+              />
+            ) : (
+              <Typography variant="body1">
+                Skills: {updatedWorkshop.selectedSkills.map((skill) => skill.skillName).join(', ')}
+              </Typography>
+            )}
+          </Grid>
+          <Grid item xs={6}>
+            {isEditMode ? (
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  label="Workshop Date"
+                  value={dayjs(updatedWorkshop.workshopDate)}
+                  onChange={(date) => handleChange('workshopDate', new Date(date).toLocaleDateString())}
+                  slotProps={{
+                    textField: {
+                      inputProps: { automationId: 'edit_workshop_date_field' },
+                    },
+                  }}
+                />
+              </LocalizationProvider>
+            ) : (
+              <Typography variant="body1">
+                Workshop Date: {new Date(updatedWorkshop.workshopDate).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })}
+              </Typography>
+            )}
+          </Grid>
+          <Grid item xs={6}>
+            {isEditMode ? (
+              <Autocomplete
+                className="create_workshop_autocomplete"
+                id="venue"
+                options={venues}
+                getOptionLabel={(option) => option.venueName}
+                getOptionSelected={(option, value) => option.venueId === value.venueId}
+                value={venues.find((venue) => venue.venueName === updatedWorkshop.venue)}
+                onChange={(e, newValue) => {
+                  handleChange('venue', newValue.venueName);
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    variant="standard"
+                    id="edit_workshop_location_field"
+                    inputProps={{ automationId: 'edit_workshop_location_field' }}
+                    {...params}
+                    label="Location"
+                    fullWidth
+                  />
+                )}
+              />
+            ) : (
+              <Typography variant="body1">Location: {updatedWorkshop.venue}</Typography>
+            )}
+          </Grid>
+          <Grid item xs={6}>
+            {isEditMode ? (
+              <LocalizationProvider dateAdapter={AdapterDayjs} locale="en" timeZone="America/New_York">
+                <TimePicker
+                  label="Start Time"
+                  value={dayjs(updatedWorkshop.startTime)}
+                  onChange={(date) => handleChange('startTime', new Date(date))}
+                  slotProps={{
+                    textField: {
+                      inputProps: { automationId: 'edit_workshop_start_time_field' },
+                    },
+                  }}
+                />
+              </LocalizationProvider>
+            ) : (
+              <Typography variant="body1">
+                Start Time: {new Date(updatedWorkshop.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+              </Typography>
+            )}
+          </Grid>
+          <Grid item xs={6}>
+            {isEditMode ? (
+              <LocalizationProvider dateAdapter={AdapterDayjs} locale="en" timeZone="America/New_York">
+                <TimePicker
+                  label="End Time"
+                  value={dayjs(updatedWorkshop.endTime)}
+                  onChange={(date) => handleChange('endTime', new Date(date))}
+                  slotProps={{
+                    textField: {
+                      inputProps: { automationId: 'edit_workshop_end_time_field' },
+                    },
+                  }}
+                />
+              </LocalizationProvider>
+            ) : (
+              <Typography variant="body1">
+                End Time : {new Date(updatedWorkshop.endTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+              </Typography>
+            )}
+          </Grid>
+          <Grid item xs={6}>
+            {isEditMode ? (
+              <TextField
+                variant="standard"
+                id="edit_workshop_capacity_field"
+                inputProps={{ automationId: 'edit_workshop_capacity_field' }}
+                label="Capacity"
+                type="number"
+                value={updatedWorkshop.capacity}
+                onChange={(e) => handleChange('capacity', e.target.value)}
+              />
+            ) : (
+              <Typography variant="body1">Capacity: {updatedWorkshop.capacity}</Typography>
+            )}
+          </Grid>
+          {!isEditMode && (
+            <Grid item xs={6}>
+              <Typography variant="body1">
+                Last Updated: {new Date(workshop.createdDate).toLocaleString()}
+              </Typography>
+            </Grid>
+          )}
+        </Grid>
+        <Dialog open={openSaveDialog} onClose={handleCancel}>
+          <DialogTitle align='center'>Confirm Changes</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure you want to save the changes?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCancel} color="error">
+              No
+            </Button>
+            <Button onClick={handleSaveConfirmation} color="primary">
+              Yes
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog open={openDeleteDialog} onClose={handleCancel}>
+          <DialogTitle align='center'>Confirm Delete</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure you want to delete the workshop?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCancel} color="error">
+              No
+            </Button>
+            <Button onClick={handleDeleteConfirmation} color="primary">
+              Yes
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </Paper>
+      <ToastContainer />
+    </Container>
+  );
+};
+
+export default ViewWorkshop;

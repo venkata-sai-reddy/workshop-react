@@ -15,6 +15,10 @@ import CU from '../../assets/CU.png'
 import { userNavLeftPages, userNavRightPages, userNavMenu } from '../../utils/UserAccess';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
+import RequestWorkshop from '../Workshop/Request/RequestWorkshop';
+import { requestWorkshop } from '../../store/actions/WorkshopActions';
+import { ToastContainer, toast } from 'react-toastify';
+import { sessionUnAuthCheck } from '../../utils/Common';
 
 function NavigationBar(props) {
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -22,7 +26,16 @@ function NavigationBar(props) {
   const [anchorElCont, setAnchorElCont] = useState(null);
   const [content, setContent] = useState(null);
   const navigate = useNavigate();
+  const [dialogOpen, setDialogOpen] = useState(false);
 
+  const handleOpenDialog = () => {
+    console.log('callingHandleOpen')
+    setDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setDialogOpen(false);
+  };
   const { user } = props;
 
   const pages = Object.entries(userNavLeftPages[user?.userType]);
@@ -58,13 +71,57 @@ function NavigationBar(props) {
     if (isContent) {
       setContent(Object.entries(data));
     } else {
-      navigate(data);
+      if (data === '/request-workshop') {
+        handleOpenDialog();
+      } else {
+        navigate(data);
+      }
     }
     menu();
   }
 
+  const handleRequestWorkshop = async (data) => {
+    try {
+        const response = await requestWorkshop(data);
+        if (response.data === true) {
+            toast.success('Workshop Requested Successfully!', {
+                position: 'top-right',
+                autoClose: 5000,
+                hideProgressBar: true,
+                pauseOnHover: true,
+                closeOnClick: true,
+                closeButton: false,
+                draggable: false
+            });
+        } else {
+            toast.error('Workshop Request Failed!', {
+                position: 'top-right',
+                autoClose: 5000,
+                hideProgressBar: true,
+                pauseOnHover: true,
+                closeOnClick: true,
+                closeButton: false,
+                draggable: false
+            });
+        }
+    } catch (error) {
+        console.error("Error : ", error);
+        sessionUnAuthCheck(error) && navigate('/logout');
+        toast.error(error?.response?.data?.message, {
+            position: 'top-right',
+            autoClose:10000,
+            hideProgressBar: true,
+            pauseOnHover: true,
+            closeOnClick: false,
+            closeButton: true,
+            draggable: false
+        });
+    }
+    handleCloseDialog();
+};
+
   return (
-    <AppBar id='home_navbar' position="static">
+    <AppBar id='home_navbar' position="sticky">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <img src={CU} alt='LOGO' id='home_logo' className='home_logo' automationId='home_logo' />
@@ -119,7 +176,7 @@ function NavigationBar(props) {
             >
               {navMenu.map(([page, url]) => (
                 <MenuItem key={page} onClick={() => handleMenuItemClick(url, handleCloseNavMenu, false)}>
-                  <Typography textAlign="center">{page}</Typography>
+                  <Typography textAlign="center">{page.replace("_", " ")}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -146,8 +203,8 @@ function NavigationBar(props) {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map(([page, content]) => (
-              content[0] === '/' ? 
-              <Button className = 'button_navbar'
+              content[0] === '/' ?
+                <Button className='button_navbar'
                   key={page}
                   onClick={() => handleMenuItemClick(content, handleCloseNavMenu, false)}
                   sx={{ my: 2, color: 'white', display: 'block' }}
@@ -155,16 +212,16 @@ function NavigationBar(props) {
                   {page}
                 </Button>
                 :
-              <Button className = 'button_navbar' onClick={handleOpenContMenu}>
-                <Button
-                className='in_button_navbar'
-                  key={page}
-                  onClick={() => handleMenuItemClick(content, handleCloseContMenu, true)}
-                  sx={{ my: 2, color: 'white', display: 'block'}}
-                >
-                  {page}
+                <Button className='button_navbar' onClick={handleOpenContMenu}>
+                  <Button
+                    className='in_button_navbar'
+                    key={page}
+                    onClick={() => handleMenuItemClick(content, handleCloseContMenu, true)}
+                    sx={{ my: 2, color: 'white', display: 'block' }}
+                  >
+                    {page}
+                  </Button>
                 </Button>
-              </Button>
             ))}
           </Box>
           <Menu
@@ -184,19 +241,19 @@ function NavigationBar(props) {
             onClose={handleCloseContMenu}>
             {content?.map(([page, url]) => (
               <MenuItem key={page} onClick={() => handleMenuItemClick(url, handleCloseContMenu, false)}>
-                <Typography textAlign="center">{page}</Typography>
+                <Typography textAlign="center">{page.replace("_", " ")}</Typography>
               </MenuItem>
             ))}
           </Menu>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title={user?.firstName}>
               <IconButton size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              color="inherit"
-              automationId='home_user_avatar_button'
-              onClick={handleOpenUserMenu}>
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                color="inherit"
+                automationId='home_user_avatar_button'
+                onClick={handleOpenUserMenu}>
                 <Avatar automationId='home_user_avatar' alt={user?.firstName} src="/broken-image.jpg" />
               </IconButton>
             </Tooltip>
@@ -218,13 +275,15 @@ function NavigationBar(props) {
             >
               {profiles.map(([page, url]) => (
                 <MenuItem key={page} onClick={() => handleMenuItemClick(url, handleCloseUserMenu, false)}>
-                  <Typography textAlign="center" automationId={`home_user_`+page}>{page}</Typography>
+                  <Typography textAlign="center" automationId={`home_user_` + page}>{page.replace("_", " ")}</Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
         </Toolbar>
       </Container>
+      <RequestWorkshop open={dialogOpen} onClose={handleCloseDialog} handleRequest={handleRequestWorkshop}/>
+      <ToastContainer />
     </AppBar>
   );
 }

@@ -1,29 +1,35 @@
 const userAccess = {
-    'Student' : [
+    'Student': [
         '/home',
         '/workshop',
         '/view-workshop',
+        '/request-workshop',
         '/view-registered-workshops',
+        '/view-requested-workshops',
         '/profile'
     ],
-    'Instructor':[
+    'Instructor': [
         '/home',
         '/workshop',
         '/view-workshop',
+        '/request-workshop',
         '/create-workshop',
         '/update-workshop',
         '/delete-workshop',
         '/view-registered-workshops',
+        '/view-requested-workshops',
         '/profile'
     ],
-    'Admin':[
+    'Admin': [
         '/home',
         '/workshop',
         '/view-workshop',
         '/create-workshop',
+        '/request-workshop',
         '/update-workshop',
         '/delete-workshop',
         '/view-registered-workshops',
+        '/view-requested-workshops',
         '/all-workshops',
         '/profile',
         '/all-profiles'
@@ -32,9 +38,12 @@ const userAccess = {
 
 export const userNavLeftPages = {
     'Student': {
+        Home: '/Home',
         Workshop: {
             View: '/workshop',
-            Registered: '/view-registered-workshops'            
+            Enrolled_Workshops: '/view-registered-workshops',
+            Request_Workshop: '/request-workshop',
+            Requested_Skills: '/view-requested-workshops'
         }
     },
     'Instructor': {
@@ -42,7 +51,9 @@ export const userNavLeftPages = {
         Workshop: {
             View: '/workshop',
             Create: '/create-workshop',
-            Registered: '/view-registered-workshops'
+            Enrolled_Workshops: '/view-registered-workshops',
+            Request_Workshop: '/request-workshop',
+            Requested_Skills: '/view-requested-workshops'
         }
     }
 }
@@ -50,14 +61,18 @@ export const userNavLeftPages = {
 export const userNavMenu = {
     'Student': {
         Home: '/home',
-        View: '/workshop',
-        Registered: '/view-registered-workshops'
+        Search: '/workshop',
+        Enrolled_Workshops: '/view-registered-workshops',
+        Request_Workshop: '/request-workshop',
+        Requested_Skills: '/view-requested-workshops'
     },
     'Instructor': {
         Home: '/home',
-        View: '/workshop',
+        Search: '/workshop',
         Create: '/create-workshop',
-        Registered: '/view-registered-workshops'
+        Enrolled_Workshops: '/view-registered-workshops',
+        Request_Workshop: '/request-workshop',
+        Requested_Skills: '/view-requested-workshops'
     }
 }
 
