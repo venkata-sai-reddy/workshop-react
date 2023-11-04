@@ -41,8 +41,10 @@ export const userNavLeftPages = {
         Home: '/Home',
         Workshop: {
             View: '/workshop',
-            Enrolled_Workshops: '/view-registered-workshops',
             Request_Workshop: '/request-workshop',
+        },
+        Activity: {
+            Enrolled_Workshops: '/view-registered-workshops',
             Requested_Skills: '/view-requested-workshops'
         }
     },
@@ -51,8 +53,10 @@ export const userNavLeftPages = {
         Workshop: {
             View: '/workshop',
             Create: '/create-workshop',
-            Enrolled_Workshops: '/view-registered-workshops',
             Request_Workshop: '/request-workshop',
+        },
+        Activity: {
+            Enrolled_Workshops: '/view-registered-workshops',
             Requested_Skills: '/view-requested-workshops'
         }
     }
