@@ -8,3 +8,8 @@ export const getVenues = async () => {
     }});
     return response;
 }
+
+export const getSkills = async () => {
+    const response = await axios.get(APP_BASE_URL + AdminApis.skillsEndPoint);
+    return response;
+}

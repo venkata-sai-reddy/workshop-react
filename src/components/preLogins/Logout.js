@@ -27,7 +27,7 @@ export const Logout = () => {
         if(!isLogout) {
             performLogout();
         }
-    }, [isLogout, dispatch, navigate]);
+    }, [isLogout, dispatch, navigate, userState?.user?.session?.sessionId]);
 
     return (<></>);
 }
