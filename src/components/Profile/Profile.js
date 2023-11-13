@@ -1,4 +1,3 @@
-// Profile.jsx
 import React from 'react';
 import { Container, Grid } from '@mui/material';
 import ProfilePage from './ProfilePage';

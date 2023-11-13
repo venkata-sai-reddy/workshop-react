@@ -38,7 +38,7 @@ const userAccess = {
 
 export const userNavLeftPages = {
     'Student': {
-        Home: '/Home',
+        Home: '/home',
         Workshop: {
             View: '/workshop',
             Request_Workshop: '/request-workshop',

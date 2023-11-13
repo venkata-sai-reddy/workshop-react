@@ -55,8 +55,11 @@ export const getRequestedWorkshops = async () => {
     return response;
 }
 
-export const viewWorkshop = async (data) => {
-    const response = await axios.get(APP_BASE_URL + WorkshopApis.viewWorkshop, data, {
+export const getWorkshop = async (data) => {
+    const response = await axios.get(APP_BASE_URL + WorkshopApis.getWorkshopByIdEndPoint, {
+        params: {
+            workshopId: data
+        },
         headers: {
             'Content-Type': 'application/json',
             'sessionid': localStorage.getItem('sessionid')
@@ -68,7 +71,6 @@ export const viewWorkshop = async (data) => {
 export const updateWorkshop = async (data) => {
     data.startTime = convertTimetoLocalDateTime(data.workshopDate, data.startTime);
     data.endTime = convertTimetoLocalDateTime(data.workshopDate, data.endTime);
-    console.log(data);
     const response = await axios.put(APP_BASE_URL + WorkshopApis.updateWorkshopEndPoint, data, {
         headers: {
             'Content-Type': 'application/json',
@@ -100,6 +102,16 @@ export const requestWorkshop = async (data) => {
 
 export const enrollWorkshop = async (data) => {
     const response = await axios.post(APP_BASE_URL + WorkshopApis.enrollWorkshopEndPoint, data, {
+        headers: {
+            'Content-Type': 'application/json',
+            'sessionid': localStorage.getItem('sessionid')
+        },
+    })
+    return response;
+}
+
+export const unEnrollWorkshop = async (data) => {
+    const response = await axios.post(APP_BASE_URL + WorkshopApis.unEnrollWorkshopEndPoint, data, {
         headers: {
             'Content-Type': 'application/json',
             'sessionid': localStorage.getItem('sessionid')

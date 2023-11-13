@@ -26,16 +26,13 @@ const HomePage = () => {
                 setIsLoading(false);
             }
         };
-        if (isLoading && !allWorkshops) {
+        if (isLoading) {
             getWorkshops();
         }
-        if (allWorkshops) {
-            setIsLoading(false);
-        }
-    }, [allWorkshops, dispatch, isLoading]);
+    }, []);
 
     const handleCardClick = (workshopData) => {
-        navigate('/view-workshop', { state: { workshop: workshopData } });
+        navigate('/view-workshop', { state: { workshopId: workshopData.workshopId } });
     };
 
     const sortedWorkshops =  isLoading ? [] : [...allWorkshops].sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
@@ -73,6 +70,7 @@ const HomePage = () => {
                                                         </Card.Text>
                                                         <Card.Text>
                                                             <LocationOn className="mr-2" /> {item.venue}</Card.Text>
+                                                        <Card.Text><Code className="mr-2" /> {item.capacity-item.enrollCount}</Card.Text>
                                                         
                                                     </Card.Body>
                                                 </Card>

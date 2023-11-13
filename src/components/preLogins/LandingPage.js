@@ -2,8 +2,8 @@ import React from 'react';
 import { Container, Grid, Typography, Link } from '@mui/material';
 import clark_logo from '../../assets/clark_logo.png';
 import { LoginComponent } from './Login/LoginComponent';
-import { SignUpComponent } from './SignUp/SignUpComponent';
-import { ForgetPasswordComponent } from './ForgetPassword/ForgetPasswordComponent';
+import SignUpComponent from './SignUp/SignUpComponent';
+import ForgetPasswordComponent from './ForgetPassword/ForgetPasswordComponent';
 import './LandingPage.css';
 export const LandingPage = (props) => {
   return (

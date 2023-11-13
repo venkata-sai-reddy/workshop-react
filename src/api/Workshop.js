@@ -7,5 +7,7 @@ export const WorkshopApis={
     requestWorkshopEndPoint:'/workshop/request',
     createdWorkshopsEndPoint:'/workshop/created',
     requestedWorkshopsEndPoint: '/workshop/requested',
-    enrollWorkshopEndPoint: '/workshop/enroll'
+    enrollWorkshopEndPoint: '/workshop/enroll',
+    unEnrollWorkshopEndPoint: '/workshop/unenroll',
+    getWorkshopByIdEndPoint: '/workshop/view'
 }
