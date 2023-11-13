@@ -277,7 +277,7 @@ const SignUpComponent = () => {
                     <Grid item xs={6}>
                         <TextField
                             label="Create Password"
-                            type="text"
+                            type="password"
                             id="createPassword"
                             className='sign_up_form_fields'
                             name="createPassword"
@@ -295,7 +295,7 @@ const SignUpComponent = () => {
                     <Grid item xs={6}>
                         <TextField
                             label="Confirm Password"
-                            type="text"
+                            type="password"
                             id="confirmPassword"
                             name="confirmPassword"
                             className='sign_up_form_fields'

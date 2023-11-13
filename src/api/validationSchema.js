@@ -6,7 +6,7 @@ export const signUpValidationSchema = yup.object().shape({
   emailId: yup.string().email('Invalid email format').required('Email is required'),
   phoneNumber: yup.string().required('Phone Number is required'),
   createPassword: yup.string().required('Create Password is required').matches(
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$&*_\-?.])[A-Za-z0-9!@#$&*_\-?.]{8,20}$/,
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!.@#$&*])[A-Za-z0-9!.@#$&*]{8,20}$/,
     'Password must contains atleast one capital, small letters, numeric and special character'
   ),
   confirmPassword: yup.string().required('Confirm Password is required').oneOf([yup.ref('createPassword'), null], 'Passwords must match'),
