@@ -8,6 +8,8 @@ import HomeAppContent from './HomeAppContent';
 import { Card, Carousel, Col, Container, Row } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { LocationOn, AccessTime, Code } from '@mui/icons-material';
+import HowToRegIcon from '@mui/icons-material/HowToReg';
+import Groups3Icon from '@mui/icons-material/Groups3';
 
 const HomePage = () => {
     const dispatch = useDispatch();
@@ -54,7 +56,11 @@ const HomePage = () => {
                                             <Col key={item.workshopId} md={4}>
                                                 <Card style={{ cursor: 'pointer', width: '100%',  height: '250px' }} onClick={() => handleCardClick(item)}>
                                                     <Card.Body>
-                                                        <Card.Title style={{padding: '10px'}}>{item.workshopName}</Card.Title>
+                                                        <Card.Title style={{padding: '10px', justifyContent: 'space-between'}}>
+                                                            <div style={{justifyContent: 'space-between', display:'flex', width: '100%'}}>
+                                                                <div>{item.workshopName}</div>
+                                                                <div>{item.isUserEnrolled && <HowToRegIcon style={{color: 'green'}}/>}</div></div>
+                                                        </Card.Title>
 
                                                         <Card.Text><Code className="mr-2" /> {item.selectedSkills.map(skill => skill.skillName).join(', ')}</Card.Text>
                                                         <Card.Text>
@@ -70,7 +76,7 @@ const HomePage = () => {
                                                         </Card.Text>
                                                         <Card.Text>
                                                             <LocationOn className="mr-2" /> {item.venue}</Card.Text>
-                                                        <Card.Text><Code className="mr-2" /> {item.capacity-item.enrollCount}</Card.Text>
+                                                        <Card.Text><Groups3Icon className="mr-2" /> {item.capacity-item.enrollCount}</Card.Text>
                                                         
                                                     </Card.Body>
                                                 </Card>
