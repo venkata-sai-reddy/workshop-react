@@ -91,7 +91,7 @@ export const LoginComponent = () => {
                 </form>
                 <Grid container justifyContent="space-around" alignItems="center" id="login_container_links" className="login_container_links" automationId="login_container_links">
                     <Grid item>
-                        First time here? <Link to={'/signup'}>Sign Up</Link>
+                        First time here? <Link automationId="sign_up_link" to={'/signup'}>Sign Up</Link>
                     </Grid>
                     <Grid item>
                         <Link to={'/forget-password'}>Forget Password?</Link>

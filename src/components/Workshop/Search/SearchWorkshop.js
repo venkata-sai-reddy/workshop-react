@@ -17,21 +17,17 @@ export default function SearchWorkshop() {
   useEffect(() => {
     const getWorkshops = async () => {
       try {
-        const venues = await getAllWorkshops();
-        dispatch(saveAllWorkshops(venues));
+        const response = await getAllWorkshops();
+        dispatch(saveAllWorkshops(response));
         setIsLoading(false);
       } catch (error) {
         console.error("Error : ", error);
         setIsLoading(false);
       }
     };
-    if (isLoading && !allWorkshops) {
+    if (isLoading) {
       getWorkshops();
     }
-    if (allWorkshops) {
-      setIsLoading(false);
-    }
-
   })
 
   const columns = useMemo(
@@ -62,12 +58,12 @@ export default function SearchWorkshop() {
         Header: 'Duration',
         accessor: (row) => `${Math.floor((new Date(row.endTime) - new Date(row.startTime)) / 3600000)} hr ${Math.floor(((new Date(row.endTime) - new Date(row.startTime)) % 3600000) / 60000)} min`,
         Filter: DefaultColumnFilter,
-        width: '80px',
+        width: '90px',
       },
       { Header: 'Location', accessor: 'venue', Filter: DefaultColumnFilter, width: '150px' },
       { Header: 'Status',
        accessor: (row) => getTimelineStatus(new Date(row.startTime), new Date(row.endTime)),
-       Filter: DefaultColumnFilter, width: '80px' }
+       Filter: DefaultColumnFilter, width: '70px' }
     ],
     []
   );
@@ -77,7 +73,7 @@ export default function SearchWorkshop() {
       <Typography variant="h6"  className='workshop_title_page' sx={{ marginTop: '1rem', marginBottom: '1rem' }}>
         Workshops
       </Typography>
-      <WorkshopTable data={allWorkshops} columns={columns} />
+      <WorkshopTable data={allWorkshops} columns={columns}  forwardUrl={'/view-workshop'}/>
     </Container>
   );
 }

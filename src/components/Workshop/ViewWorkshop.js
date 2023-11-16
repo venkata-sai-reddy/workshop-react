@@ -10,13 +10,14 @@ import {
   TextField,
   Button,
   Autocomplete,
+  CircularProgress,
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useDispatch, useSelector } from 'react-redux';
 import { getVenues } from '../../store/actions/AdminActions';
 import { saveVenues } from '../../store/reducers/AdminReducers';
-import { DatePicker, LocalizationProvider, TimePicker, clockNumberClasses } from '@mui/x-date-pickers';
+import { DatePicker, LocalizationProvider, TimePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import SaveIcon from '@mui/icons-material/Save';
 import dayjs from 'dayjs';
@@ -29,26 +30,46 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogActions from '@mui/material/DialogActions';
-import { deleteWorkshop, enrollWorkshop, updateWorkshop } from '../../store/actions/WorkshopActions';
+import { deleteWorkshop, enrollWorkshop, getWorkshop, unEnrollWorkshop, updateWorkshop } from '../../store/actions/WorkshopActions';
 import { convertTimetoLocalDateTime, convertToDateFormat, sessionUnAuthCheck } from '../../utils/Common';
 import { LoadingPage } from '../Loading/Loading';
-import { updateDeleteWorkshop, updateLocalWorkshop } from '../../store/reducers/WorkshopReducers';
+import { saveUpdatedWorkshop, saveWorkshop, updateDeleteWorkshop, updateLocalWorkshop } from '../../store/reducers/WorkshopReducers';
 
 const ViewWorkshop = () => {
   const location = useLocation();
-  const { workshop } = location.state || {};
+  const { workshopId } = location.state || {};
   const [isEditMode, setIsEditMode] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
-  const [updatedWorkshop, setUpdatedWorkshop] = useState({ ...workshop });
+  const workshop = useSelector((state) => state.workshop.value.workshopDetails);
+  const [updatedWorkshop, setUpdatedWorkshop] = useState(undefined);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
-
   const userState = useSelector((state) => state.user.value);
   const [openSaveDialog, setOpenSaveDialog] = useState(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [isEnrolled, setIsEnrolled] = useState(false);
+  const [isEnrolling, setIsEnrolling] = useState(false);
 
+  useEffect(() => {
+    const fetchWorkshop = async () => {
+      try {
+        const response = await getWorkshop(workshopId);
+        dispatch(saveWorkshop(response));
+        setUpdatedWorkshop(response.data);
+        setIsEnrolled(response.data.isUserEnrolled);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error : ", error);
+        setIsLoading(true);
+      }
+    };
+    if (isLoading) {
+      fetchWorkshop();
+    }
+  }, [isLoading, workshopId])
   const handleEditClick = () => {
+    setIsLoading(true);
     setIsEditMode(true);
   };
 
@@ -141,11 +162,12 @@ const ViewWorkshop = () => {
     setOpenDeleteDialog(false);
   };
 
-  const handleEnroll = async () => {
+  const handleUnEnroll = async () => {
+    setIsEnrolling(true);
     try {
-      const response = await enrollWorkshop(workshop);
+      const response = await unEnrollWorkshop(workshop);
       if (response.data === true) {
-        toast.success('Workshop Enrolled Successfully!', {
+        toast.success('Workshop UnEnrolled Successfully!', {
           position: 'top-right',
           autoClose: 3000,
           hideProgressBar: true,
@@ -154,6 +176,8 @@ const ViewWorkshop = () => {
           closeButton: false,
           draggable: false
         });
+        setIsEnrolling(false);
+        setIsEnrolled(false);
       } else {
         toast.error('Failed to Enroll', {
           position: 'top-right',
@@ -164,6 +188,7 @@ const ViewWorkshop = () => {
           pauseOnHover: true,
           draggable: false
         });
+        setIsEnrolling(false);
       }
     } catch (error) {
       console.error('Error enrolling Workshop :', error);
@@ -177,6 +202,51 @@ const ViewWorkshop = () => {
         pauseOnHover: true,
         draggable: false
       });
+      setIsEnrolling(false);
+    }
+  }
+
+  const handleEnroll = async () => {
+    setIsEnrolling(true);
+    try {
+      const response = await enrollWorkshop(workshop);
+      if (response.data === true) {
+        toast.success('Workshop Enrolled Successfully!', {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          closeButton: false,
+          draggable: false
+        });
+        setIsEnrolling(false);
+        setIsEnrolled(true);
+      } else {
+        toast.error('Failed to Enroll', {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          closeButton: false,
+          pauseOnHover: true,
+          draggable: false
+        });
+        setIsEnrolling(false);
+      }
+    } catch (error) {
+      console.error('Error enrolling Workshop :', error);
+      sessionUnAuthCheck(error) && navigate('/logout');
+      toast.error(error?.response?.data?.message, {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        closeButton: false,
+        pauseOnHover: true,
+        draggable: false
+      });
+      setIsEnrolling(false);
     }
   }
 
@@ -208,6 +278,7 @@ const ViewWorkshop = () => {
             closeButton: false,
             draggable: false
           });
+          dispatch(saveUpdatedWorkshop(updatedWorkshop));
           dispatch(updateLocalWorkshop(updatedWorkshop));
           setIsLoading(false);
         } else {
@@ -241,21 +312,27 @@ const ViewWorkshop = () => {
         setIsLoading(false);
       }
     };
-
-    if (isEdited && checkAnyFieldsChange()) {
+    if (isEdited && workshop && checkAnyFieldsChange()) {
       saveWorkshop();
       setIsEditMode(false);
       setIsEdited(false);
     }
-    if (userState.user.userType === 'Student') {
-      setIsLoading(false);
-    } else if (isLoading && !venues) {
+    if (isLoading && isEditMode && !venues) {
       fetchVenues();
     }
-    if (venues) {
+    if (venues && workshop) {
       setIsLoading(false);
     }
-  }, [dispatch, isLoading, userState.user.userType, venues, isEdited, checkAnyFieldsChange, updatedWorkshop, workshop, navigate]);
+    if(!workshop){
+      setIsLoading(true);
+    }
+    if(!isEditMode && workshop){
+      setIsLoading(false)
+    }
+    if(!updatedWorkshop){
+      setIsLoading(true);
+    }
+  }, [dispatch, isEditMode, isEdited, isLoading, updatedWorkshop, venues, workshop]);
 
   const handleChange = (name, value) => {
     if (name === 'startTime' || name === 'endTime') {
@@ -305,9 +382,16 @@ const ViewWorkshop = () => {
           </div>
         ) : (
           <div style={{ position: 'absolute', top: 10, right: 10 }}>
-            <Button variant="contained" color="error" onClick={handleEnroll} sx={{ fontWeight: 'bold' }}>
-              Enroll
+            {isEnrolled ? (
+              <Button variant="contained" color="error" onClick={handleUnEnroll} sx={{ fontWeight: 'bold' }}>
+              {isEnrolling ? <CircularProgress style={{color:'white', height: '25px', width: '25px'}} /> : 'UnEnroll'}
             </Button>
+            ) : (
+              <Button variant="contained" color="error" onClick={handleEnroll} sx={{ fontWeight: 'bold' }}>
+              {isEnrolling ? <CircularProgress style={{color:'white', height: '25px', width: '25px'}} /> : 'Enroll'} 
+            </Button>
+            )}
+            
           </div>
         )}
         <Typography variant="h4" gutterBottom>
@@ -487,7 +571,7 @@ const ViewWorkshop = () => {
                 onChange={(e) => handleChange('capacity', e.target.value)}
               />
             ) : (
-              <Typography variant="body1">Capacity: {updatedWorkshop.capacity}</Typography>
+              <Typography variant="body1">Capacity: {updatedWorkshop.enrollCount}/{updatedWorkshop.capacity}</Typography>
             )}
           </Grid>
           {!isEditMode && (
@@ -506,11 +590,12 @@ const ViewWorkshop = () => {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleCancel} color="error">
-              No
-            </Button>
+            
             <Button onClick={handleSaveConfirmation} color="primary">
               Yes
+            </Button>
+            <Button onClick={handleCancel} color="error">
+              No
             </Button>
           </DialogActions>
         </Dialog>
@@ -522,11 +607,12 @@ const ViewWorkshop = () => {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleCancel} color="error">
-              No
-            </Button>
+            
             <Button onClick={handleDeleteConfirmation} color="primary">
               Yes
+            </Button>
+            <Button onClick={handleCancel} color="error">
+              No
             </Button>
           </DialogActions>
         </Dialog>
