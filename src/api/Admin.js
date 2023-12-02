@@ -1,4 +1,5 @@
 export const AdminApis={
     venuesEndPoint:'/admin/venues',
-    skillsEndPoint: '/skills'
+    skillsEndPoint: '/skills',
+    sendCustomMessageEndPoint: '/admin/workshop/notify'
 }

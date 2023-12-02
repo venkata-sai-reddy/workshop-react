@@ -10,6 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { LocationOn, AccessTime, Code } from '@mui/icons-material';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import Groups3Icon from '@mui/icons-material/Groups3';
+import { displayName } from '../../utils/Common';
 
 const HomePage = () => {
     const dispatch = useDispatch();
@@ -58,7 +59,7 @@ const HomePage = () => {
                                                     <Card.Body>
                                                         <Card.Title style={{padding: '10px', justifyContent: 'space-between'}}>
                                                             <div style={{justifyContent: 'space-between', display:'flex', width: '100%'}}>
-                                                                <div>{item.workshopName}</div>
+                                                                <div>{displayName(item.workshopName)}</div>
                                                                 <div>{item.isUserEnrolled && <HowToRegIcon style={{color: 'green'}}/>}</div></div>
                                                         </Card.Title>
 
