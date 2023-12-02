@@ -158,26 +158,27 @@ const UsersTable = ({ data: initialData, columns }) => {
         }}
       >
         <div>
-          <button onClick={() => gotoPage(0)} disabled={pageIndex === 0}>
-            {'<<'}
-          </button>{' '}
-          <button onClick={() => gotoPage(pageIndex - 1)} disabled={pageIndex === 0}>
-            {'<'}
-          </button>{' '}
+          <KeyboardDoubleArrowLeftIcon
+            sx={{ cursor: 'pointer' }}
+            onClick={() => gotoPage(0)} disabled={pageIndex === 0}
+          />
+          {' '}
+          <NavigateBeforeIcon 
+            sx={{ cursor: 'pointer' }}
+            onClick={() => gotoPage(pageIndex - 1)} disabled={pageIndex === 0}
+          />
+          {' '}
           Page {pageIndex + 1} of {Math.ceil(data.length / pageSize)}{' '}
-          <button onClick={() => gotoPage(pageIndex + 1)} disabled={pageIndex === Math.ceil(data.length / pageSize) - 1}>
-            {'>'}
-          </button>{' '}
-          {/* <button
-            onClick={() => gotoPage(Math.ceil(data.length / pageSize) - 1)}
-            disabled={pageIndex === Math.ceil(data.length / pageSize) - 1}
-          > */}
+          <NavigateNextIcon
+            sx={{ cursor: 'pointer' }}
+            onClick={() => gotoPage(pageIndex + 1)} disabled={pageIndex === Math.ceil(data.length / pageSize) - 1}
+          />
+          {' '}
           <KeyboardDoubleArrowRightIcon
             sx={{ cursor: 'pointer' }}
             onClick={() => gotoPage(Math.ceil(data.length / pageSize) - 1)}
             disabled={pageIndex === Math.ceil(data.length / pageSize) - 1}
           />
-          {/* </button> */}
         </div>
         <div>
           <span>
