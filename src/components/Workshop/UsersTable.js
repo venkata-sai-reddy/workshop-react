@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useTable, useGlobalFilter, useSortBy, usePagination, useFilters } from 'react-table';
 import {
   InputAdornment,
@@ -16,15 +16,12 @@ import SearchIcon from '@mui/icons-material/Search';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import FilterListIcon from '@mui/icons-material/FilterList';
-import { useNavigate } from 'react-router';
 
-const WorkshopsTable = ({ data: initialData, columns, forwardUrl }) => {
-
+const UsersTable = ({ data: initialData, columns }) => {
 
   const [data, setData] = useState(initialData);
   const [filter, setFilter] = useState(false);
   const [globalFilter, setGlobalFilter] = useState('');
-  const navigate = useNavigate();
   const {
     getTableProps,
     getTableBodyProps,
@@ -51,12 +48,9 @@ const WorkshopsTable = ({ data: initialData, columns, forwardUrl }) => {
     setTableGlobalFilter(globalFilter);
   }, [globalFilter, setTableGlobalFilter]);
 
-  const navigateToViewWorkshop = (workshopData) => {
-    forwardUrl && navigate(forwardUrl, { state: { workshopId: workshopData.workshopId } });
-  }
   return (
 
-    <TableContainer component={Paper} style={{ height: '80vh', minHeight: '400px', overflow: 'auto' }}>
+    <TableContainer component={Paper} style={{ maxHeight: '80vh', overflow: 'auto', minWidth: '500px' }}>
       <div
         style={{
           display: 'flex',
@@ -138,12 +132,6 @@ const WorkshopsTable = ({ data: initialData, columns, forwardUrl }) => {
                 {row.cells.map((cell) => (
                   <TableCell
                     {...cell.getCellProps()}
-                    sx={{ cursor: cell.column.id !== 'workshopId' ? 'pointer' : 'default' }}
-                    onClick={() => {
-                      if (cell.column.id !== 'workshopId') {
-                        navigateToViewWorkshop(row.original);
-                      }
-                    }}
                   >
                     {cell.render('Cell')}
                   </TableCell>
@@ -206,4 +194,4 @@ const WorkshopsTable = ({ data: initialData, columns, forwardUrl }) => {
   );
 };
 
-export default WorkshopsTable;
+export default UsersTable;

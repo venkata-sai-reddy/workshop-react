@@ -111,3 +111,11 @@ export function getTimelineStatus(startTime, endTime) {
     return 'Upcoming';
   }
 }
+
+export const displayName = (name) => {
+  if (name.length > 28) {
+    return name.slice(0, 28) + '...'; 
+  } else {
+    return name;
+  }
+}

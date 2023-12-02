@@ -13,3 +13,13 @@ export const getSkills = async () => {
     const response = await axios.get(APP_BASE_URL + AdminApis.skillsEndPoint);
     return response;
 }
+
+export const sendCustomNotifyMessage = async (data) => {
+    const response = await axios.post(APP_BASE_URL + AdminApis.sendCustomMessageEndPoint, data, {
+        headers: {
+            'Content-Type': 'application/json',
+            'sessionid': localStorage.getItem('sessionid')
+        }
+    });
+    return response;
+}
