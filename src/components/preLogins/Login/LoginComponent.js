@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; // Import useHistory
 import './Login.css';
 import { useForm } from "react-hook-form";
@@ -8,6 +8,7 @@ import { TextField, Typography, Button, Grid } from '@mui/material';
 import { doLogin } from '../../../store/actions/PreLoginActions'
 import { useDispatch } from 'react-redux';
 import { saveUser } from '../../../store/reducers/UserReducers'
+import ChangePass from './ChangePass';
 
 export const LoginComponent = () => {
     const schema = yup.object().shape({
@@ -17,16 +18,24 @@ export const LoginComponent = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [responseError, setResponseError] = useState(null);
+    const [isChangePass, setIsChangePass] = useState();
+    const [isAuth, setIsAuth] = useState(false);
 
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema)
     });
 
+    useEffect (() => {
+        if (isAuth && isChangePass === false) {
+            navigate("/home");
+        }
+    }, [isChangePass, isAuth, navigate]);
     const onSubmit = async (data) => {
         try {
             const response = await doLogin(data);
             dispatch(saveUser(response));
-            navigate("/home");
+            setIsChangePass(response.data.isTempPass);
+            setIsAuth(true);
         } catch (error) {
             console.error('Error logging in:', error);
             setResponseError(error?.response?.data);
@@ -98,6 +107,7 @@ export const LoginComponent = () => {
                     </Grid>
                 </Grid>
             </Grid>
+            <ChangePass open={isChangePass} handleClose={() => setIsChangePass(false)} />
         </Grid>
     );
 };

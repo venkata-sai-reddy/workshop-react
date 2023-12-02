@@ -17,6 +17,10 @@ import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { useNavigate } from 'react-router';
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
+import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 
 const WorkshopsTable = ({ data: initialData, columns, forwardUrl }) => {
 
@@ -166,22 +170,27 @@ const WorkshopsTable = ({ data: initialData, columns, forwardUrl }) => {
         }}
       >
         <div>
-          <button onClick={() => gotoPage(0)} disabled={pageIndex === 0}>
-            {'<<'}
-          </button>{' '}
-          <button onClick={() => gotoPage(pageIndex - 1)} disabled={pageIndex === 0}>
-            {'<'}
-          </button>{' '}
+          <KeyboardDoubleArrowLeftIcon
+            sx={{ cursor: 'pointer' }}
+            onClick={() => gotoPage(0)} disabled={pageIndex === 0}
+          />
+          {' '}
+          <NavigateBeforeIcon 
+            sx={{ cursor: 'pointer' }}
+            onClick={() => gotoPage(pageIndex - 1)} disabled={pageIndex === 0}
+          />
+          {' '}
           Page {pageIndex + 1} of {Math.ceil(data.length / pageSize)}{' '}
-          <button onClick={() => gotoPage(pageIndex + 1)} disabled={pageIndex === Math.ceil(data.length / pageSize) - 1}>
-            {'>'}
-          </button>{' '}
-          <button
+          <NavigateNextIcon
+            sx={{ cursor: 'pointer' }}
+            onClick={() => gotoPage(pageIndex + 1)} disabled={pageIndex === Math.ceil(data.length / pageSize) - 1}
+          />
+          {' '}
+          <KeyboardDoubleArrowRightIcon
+            sx={{ cursor: 'pointer' }}
             onClick={() => gotoPage(Math.ceil(data.length / pageSize) - 1)}
             disabled={pageIndex === Math.ceil(data.length / pageSize) - 1}
-          >
-            {'>>'}
-          </button>
+          />
         </div>
         <div>
           <span>

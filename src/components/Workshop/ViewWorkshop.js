@@ -58,7 +58,7 @@ const ViewWorkshop = () => {
   const columns = useMemo(
     () => [
       { Header: 'Name', accessor: 'firstName', Filter: DefaultColumnFilter, width: '200px' },
-      { Header: 'Email Id', accessor: 'emailId', Filter: DefaultColumnFilter, width: '180px' }          
+      { Header: 'Email Id', accessor: 'emailId', Filter: DefaultColumnFilter, width: '180px' }
     ],
     []
   );
@@ -380,8 +380,8 @@ const ViewWorkshop = () => {
   };
 
   return isLoading ? <LoadingPage /> : (
-    <Container style={{ display: 'flex', justifyContent: 'space-between', padding:0, margin:0, width:'100%'}}>
-      <Container maxWidth="md" sx={{ marginTop: 4, minWidth: '60%'}}>
+    <Container style={{ display: 'flex', justifyContent: 'space-between', padding: 0, margin: 0, width: '100%' }}>
+      <Container maxWidth="md" sx={{ marginTop: 4, minWidth: '70%' }}>
         <Paper elevation={3} sx={{ padding: 3, position: 'relative' }}>
           {userState.user.userId === workshop.createdUserId ? (
             <div style={{ position: 'absolute', top: 10, right: 10 }}>
@@ -663,13 +663,13 @@ const ViewWorkshop = () => {
         <NotifyWorkshop open={openNotifyMessageDialog} onClose={handleCloseNotifyMessage} workshopId={workshopId} />
       </Container>
       {userState.user.userId === workshop.createdUserId &&
-          (<Container maxWidth="md" sx={{ marginTop: 4}}>
-            <Paper elevation={3} sx={{ marginTop: '10px', padding: 3, position: 'relative' }}>
+        (<Container maxWidth="md" sx={{ marginTop: 4, minWidth: '45%' }}>
+          <Paper elevation={3} sx={{ marginTop: '10px', padding: 3, position: 'relative' }}>
             <Typography variant='subtitle1' sx={{ textAlign: 'center' }}> Registered Users </Typography>
             <UsersTable data={workshop.registeredUsers} columns={columns} />
           </Paper>
-          </Container>
-          )}
+        </Container>
+        )}
     </Container>
   );
 };

@@ -16,6 +16,10 @@ import SearchIcon from '@mui/icons-material/Search';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import FilterListIcon from '@mui/icons-material/FilterList';
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
+import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 
 const UsersTable = ({ data: initialData, columns }) => {
 
@@ -50,7 +54,7 @@ const UsersTable = ({ data: initialData, columns }) => {
 
   return (
 
-    <TableContainer component={Paper} style={{ maxHeight: '80vh', overflow: 'auto', minWidth: '500px' }}>
+    <TableContainer component={Paper} style={{ maxHeight: '80vh', overflow: 'auto', minWidth: '400px' }}>
       <div
         style={{
           display: 'flex',
@@ -164,16 +168,20 @@ const UsersTable = ({ data: initialData, columns }) => {
           <button onClick={() => gotoPage(pageIndex + 1)} disabled={pageIndex === Math.ceil(data.length / pageSize) - 1}>
             {'>'}
           </button>{' '}
-          <button
+          {/* <button
             onClick={() => gotoPage(Math.ceil(data.length / pageSize) - 1)}
             disabled={pageIndex === Math.ceil(data.length / pageSize) - 1}
-          >
-            {'>>'}
-          </button>
+          > */}
+          <KeyboardDoubleArrowRightIcon
+            sx={{ cursor: 'pointer' }}
+            onClick={() => gotoPage(Math.ceil(data.length / pageSize) - 1)}
+            disabled={pageIndex === Math.ceil(data.length / pageSize) - 1}
+          />
+          {/* </button> */}
         </div>
         <div>
           <span>
-            Records per page:{' '}
+            Records:{' '}
             <select
               value={pageSize}
               onChange={(e) => {
