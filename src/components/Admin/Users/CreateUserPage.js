@@ -74,7 +74,7 @@ const CreateUserPage = () => {
     }
 
     return (
-        <Box p={2} className="profile-page">
+        <Box p={2} className="profile-page" automationId="admin_create_user_page">
             <Grid container spacing={3} xs={{ width: '100%' }} justifyContent="center">
                 <Grid item minWidth={'650px'} xs={12} md={6}>
                     <Card elevation={3}>

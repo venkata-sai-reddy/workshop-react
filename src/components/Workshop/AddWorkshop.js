@@ -145,7 +145,7 @@ const AddWorkshop = () => {
                             <FormControl fullWidth>
                                 <TextField
                                     id='create_workshop_title_field'
-                                    inputProps={{ automationId: 'create_workshop_title_field' }}
+                                    inputProps={{ automationId: 'create_wrkshp_title_field' }}
                                     label="Workshop Title *"
                                     {...register('workshopName', { required: 'Title is required' })}
                                     error={!!errors.workshopName}
@@ -158,7 +158,7 @@ const AddWorkshop = () => {
                             <FormControl fullWidth>
                                 <TextField
                                     id='create_workshop_description_field'
-                                    inputProps={{ automationId: 'create_workshop_description_field' }}
+                                    inputProps={{ automationId: 'create_wrkshp_desc_field' }}
                                     label="Description"
                                     multiline
                                     rows={6}
@@ -191,7 +191,7 @@ const AddWorkshop = () => {
                                     renderInput={(params) => (
                                         <TextField
                                             id='create_workshop_skills_field'
-                                            inputProps={{ automationId: 'create_workshop_skills_field' }}
+                                            inputProps={{ automationId: 'create_wrkshp_skills_field' }}
                                             {...params}
                                             label="Skills *"
                                             error={!!fieldState.error}
@@ -218,7 +218,7 @@ const AddWorkshop = () => {
                                     renderInput={(params) => (
                                         <TextField
                                             id='create_workshop_location_field'
-                                            inputProps={{ automationId: 'create_workshop_location_field' }}
+                                            inputProps={{ automationId: 'create_wrkshp_location_field' }}
                                             {...params}
                                             label="Location *"
                                             error={!!fieldVenueState.error}
@@ -234,7 +234,7 @@ const AddWorkshop = () => {
                             <FormControl fullWidth>
                                 <TextField
                                     id='create_workshop_capacity_field'
-                                    inputProps={{ automationId: 'create_workshop_capacity_field' }}
+                                    inputProps={{ automationId: 'create_wrkshp_cap_field' }}
                                     label="Capacity"
                                     type="number"
                                     {...register('capacity')}
@@ -260,7 +260,7 @@ const AddWorkshop = () => {
                                                 onChange={(date) => field.onChange(date)}
                                                 slotProps={{
                                                     textField: {
-                                                        inputProps: { automationId: 'create_workshop_date_field' },
+                                                        inputProps: { automationId: 'create_wrkshp_date_field' },
                                                         error: !!errors.workshopDate,
                                                         helperText: errors.workshopDate?.message
                                                     },
@@ -287,7 +287,7 @@ const AddWorkshop = () => {
                                                 onChange={(startTime) => field.onChange(startTime)}
                                                 slotProps={{
                                                     textField: {
-                                                        inputProps: { automationId: 'create_workshop_start_time_field' },
+                                                        inputProps: { automationId: 'create_wrkshp_start_time_field' },
                                                         error: !!errors.startTime,
                                                         helperText: errors.startTime?.message
                                                     },
@@ -314,7 +314,7 @@ const AddWorkshop = () => {
                                                 onChange={(endTime) => field.onChange(endTime)}
                                                 slotProps={{
                                                     textField: {
-                                                        inputProps: { automationId: 'create_workshop_end_time_field' },
+                                                        inputProps: { automationId: 'create_wrkshp_end_time_field' },
                                                         error: !!errors.endTime,
                                                         helperText: errors.endTime?.message
                                                     },
@@ -326,10 +326,10 @@ const AddWorkshop = () => {
                             </FormControl>
                         </Grid>
                         <Grid item md={12} className='workshop_buttons'>
-                            <Button automationId='create_workshop_create_button' className='workshop_submit_button' id='create_workshop_create_button' type="submit" variant="contained" color="primary" sx={{ mr: 2 }} >
+                            <Button automationId='create_wrkshp_create_button' className='workshop_submit_button' id='create_workshop_create_button' type="submit" variant="contained" color="primary" sx={{ mr: 2 }} >
                                 Create
                             </Button>
-                            <Button automationId='create_workshop_clear_button' className='workshop_clear_button' id='create_workshop_clear_button' type="button" variant="outlined" color="error" onClick={clearForm}>
+                            <Button automationId='create_wrkshp_clear_button' className='workshop_clear_button' id='create_workshop_clear_button' type="button" variant="outlined" color="error" onClick={clearForm}>
                                 Clear
                             </Button>
                         </Grid>

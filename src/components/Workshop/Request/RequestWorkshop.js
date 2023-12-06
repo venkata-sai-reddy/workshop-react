@@ -38,15 +38,15 @@ const RequestWorkshop = ({ open, onClose, handleRequest }) => {
 
     const handleSkillChange = (event, values) => {
         const value = values.pop()
-        if (typeof(value) === 'object') {
+        if (typeof (value) === 'object') {
             values.push(value);
             setSelectedSkill(values);
         } else {
             const inputText = value;
             console.log(inputText)
-            if(inputText === undefined){
+            if (inputText === undefined) {
                 setSelectedSkill([]);
-            }else if (inputText !== '' && !values.find((skill) => skill.skillName === inputText)) {
+            } else if (inputText !== '' && !values.find((skill) => skill.skillName === inputText)) {
                 setSelectedSkill([...values, { skillName: inputText }]);
             }
         }
@@ -63,7 +63,7 @@ const RequestWorkshop = ({ open, onClose, handleRequest }) => {
 
     return (
         <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth PaperProps={{ style: { minWidth: '300px' } }}>
-            <DialogTitle>Request Workshop</DialogTitle>
+            <DialogTitle automationId='wrkshp_req_title'>Request Workshop</DialogTitle>
             {(open && isLoading) ? (<LoadingPage />) : <DialogContent>
                 <Autocomplete
                     multiple
@@ -79,6 +79,7 @@ const RequestWorkshop = ({ open, onClose, handleRequest }) => {
                     }}
                     renderInput={(params) => (
                         <TextField
+                            inputProps={{ automationId: 'req_wrkshp_skills_field' }}
                             variant="standard"
                             {...params}
                             label="Skills"
@@ -89,12 +90,13 @@ const RequestWorkshop = ({ open, onClose, handleRequest }) => {
             </DialogContent>
             }
             <DialogActions>
-                <Button onClick={handleCancel} color="primary">
-                    Cancel
-                </Button>
-                <Button onClick={handleRequestWorkshop} color="primary">
+                <Button automationId = "req_wrkshp_request_btn" onClick={handleRequestWorkshop} color="primary">
                     Request
                 </Button>
+                <Button automationId = "req_wrkshp_cancel_btn" onClick={handleCancel} color="primary">
+                    Cancel
+                </Button>
+
             </DialogActions>
         </Dialog>
     );

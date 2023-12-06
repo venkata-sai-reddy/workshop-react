@@ -147,7 +147,7 @@ const ProfilePage = ({ user, isPasswordShow, handleShowPassword }) => {
   }
 
   return isLoading ? <LoadingPage /> : (
-    <Box p={2} className="profile-page">
+    <Box p={2} className="profile-page" >
       <Grid container spacing={3} justifyContent="center">
         <Grid item minWidth={'650px'} xs={12} md={6}>
           <Card elevation={3}>
@@ -156,16 +156,16 @@ const ProfilePage = ({ user, isPasswordShow, handleShowPassword }) => {
                 <div className='user-prof-avatar' >
                   <div style={{ position: 'absolute', top: 10, right: 10 }}>
                     {!isEditMode && (
-                      <IconButton aria-label="edit" onClick={handleEditProfile} title='Edit Workshop'>
+                      <IconButton aria-label="edit" automationId='user_prof_edit_icon' onClick={handleEditProfile} title='Edit Profile'>
                         <EditIcon />
                       </IconButton>
                     )}
                     {isEditMode && (
                       <>
-                        <IconButton color="primary" aria-label="save" onClick={handleUpdateProfile} title='Update'>
+                        <IconButton color="primary" automationId='user_prof_save_icon' aria-label="save" onClick={handleUpdateProfile} title='Update'>
                           <SaveIcon />
                         </IconButton>
-                        <IconButton color="error" aria-label="cancel" onClick={handleCancel} title='Cancel'>
+                        <IconButton color="error" automationId='user_prof_cancel_icon' aria-label="cancel" onClick={handleCancel} title='Cancel'>
                           <ClearIcon />
                         </IconButton>
                       </>
@@ -173,7 +173,7 @@ const ProfilePage = ({ user, isPasswordShow, handleShowPassword }) => {
 
 
                   </div>
-                  <Avatar alt={userProf.firstName} sx={{ width: 100, height: 100, marginRight: '20px' }} />
+                  <Avatar automationId = 'user_prof_avatar' alt={userProf.firstName} sx={{ width: 100, height: 100, marginRight: '20px' }} />
                 </div>
               }
             >
@@ -207,10 +207,10 @@ const ProfilePage = ({ user, isPasswordShow, handleShowPassword }) => {
                   </div>
                 </>) : (
                 <>
-                  <Typography variant="h4" className='user-prof-name' gutterBottom>
+                  <Typography variant="h4" className='user-prof-name' automationId='user_prof_name' gutterBottom>
                     {`${userProf.firstName} ${userProf.lastName}`}
                   </Typography>
-                  <Typography variant="subtitle1" color="textSecondary" className='user-prof-type' gutterBottom>
+                  <Typography variant="subtitle1" color="textSecondary" automationId='user_prof_type' className='user-prof-type' gutterBottom>
                     <WorkOutlineOutlinedIcon /> {userProf.userType}
                   </Typography>
                 </>
@@ -246,10 +246,10 @@ const ProfilePage = ({ user, isPasswordShow, handleShowPassword }) => {
                   </div>
                 </>) : (
                 <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-                  <Typography variant="body1" className="user-prof-email">
+                  <Typography variant="body1" className="user-prof-email" automationId='user_prof_email_id'>
                     <EmailOutlinedIcon /> {userProf.emailId}
                   </Typography>
-                  <Typography variant="body1" className='user-prof-phone' style={{ marginLeft: '20px' }}>
+                  <Typography variant="body1" className='user-prof-phone' style={{ marginLeft: '20px' }} automationId='user_prof_phone'>
                     <PhoneAndroidOutlinedIcon /> {userProf.phoneNumber}
                   </Typography>
                 </div>
@@ -290,7 +290,7 @@ const ProfilePage = ({ user, isPasswordShow, handleShowPassword }) => {
                     userProf.skills.length !== 0 &&
                     <>
                       <Divider className="user-prof-divider" style={{ margin: '20px 0' }} />
-                      <Typography variant="h6" className='user-prof-skills'>Skills:
+                      <Typography variant="h6" className='user-prof-skills' automationId='user_prof_skills'>Skills:
                         {userProf.skills.map((skill) => (
                           <Chip
                             key={skill.skillId}
@@ -315,6 +315,7 @@ const ProfilePage = ({ user, isPasswordShow, handleShowPassword }) => {
                     color="primary"
                     onClick={handleShowPassword}
                     className='user-prof-change-pass'
+                    automationId='user_prof_change_pass_btn'
                   >
                     Change Password
                   </Button>
@@ -325,17 +326,17 @@ const ProfilePage = ({ user, isPasswordShow, handleShowPassword }) => {
         </Grid>
       </Grid>
       <Dialog open={openSaveDialog} onClose={handleCancel}>
-        <DialogTitle align='center'>Confirm Changes</DialogTitle>
+        <DialogTitle align='center' automationId='edit_user_prof_confrim_title'>Confirm Changes</DialogTitle>
         <DialogContent>
-          <DialogContentText>
+          <DialogContentText automationId='edit_user_prof_confrim_text'>
             Are you sure you want to save the changes?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleSaveConfirmation} color="primary">
+          <Button automationId='edit_user_prof_confrim_btn' onClick={handleSaveConfirmation} color="primary">
             Yes
           </Button>
-          <Button onClick={handleCancel} color="error">
+          <Button automationId='edit_user_prof_cancel_btn' onClick={handleCancel} color="error">
             No
           </Button>
 

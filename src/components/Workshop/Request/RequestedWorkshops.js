@@ -56,7 +56,7 @@ export default function RequestedWorkshops() {
 
   return isLoading ? <LoadingPage /> : (
     <Container className='workshop_page'>
-      <Typography automationId='create_workshop_title_page' className='workshop_title_page' id='request_workshop_title_page' variant="h6" >
+      <Typography automationId='requested_workshop_title_page' className='workshop_title_page' id='request_workshop_title_page' variant="h6" >
         Requested Skills
       </Typography>
       <WorkshopTable data={requestedSkills} columns={columns}  />

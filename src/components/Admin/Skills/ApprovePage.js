@@ -4,9 +4,8 @@ import { LoadingPage } from '../../Loading/Loading';
 import { DefaultColumnFilter } from '../../../utils/Common';
 import { Container } from 'react-bootstrap';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Typography } from '@mui/material';
-import { deleteUserProfile, getAllUsers, getNewSkills, updateApprovedSkill } from '../../../store/actions/AdminActions';
-import { saveAllUsers, saveNewSkills } from '../../../store/reducers/AdminReducers';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { getNewSkills, updateApprovedSkill } from '../../../store/actions/AdminActions';
+import { saveNewSkills } from '../../../store/reducers/AdminReducers';
 import AdminTable from '../AdminTable';
 import { toast, ToastContainer } from 'react-toastify';
 import DoneIcon from '@mui/icons-material/Done';
@@ -149,22 +148,22 @@ const SkillsApprovePage = () => {
 
     return isLoading ? <LoadingPage /> : (
         <Container className='users_page'>
-            <Typography variant="h6" className='requested_skills_title_page' sx={{ marginTop: '1rem', marginBottom: '1rem', textAlign: 'center' }}>
+            <Typography automationId= 'admin_skill_approve_page_title' variant="h6" className='requested_skills_title_page' sx={{ marginTop: '1rem', marginBottom: '1rem', textAlign: 'center' }}>
                 Approve Skills
             </Typography>
             <AdminTable data={newSkills} columns={columns} />
             <Dialog open={requestConfirm} onClose={handleCancel}>
-                <DialogTitle align='center'>Confirm Update</DialogTitle>
+                <DialogTitle align='center' automationId= 'admin_sa_confirm_title'>Confirm Update</DialogTitle>
                 <DialogContent>
-                    <DialogContentText>
+                    <DialogContentText automationId= 'admin_sa_confirm_text'>
                         Are you sure you want to {status === messages.text.APPROVED ? 'approve' : 'reject'} the skill?
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleUpdateSkills} color="primary">
+                    <Button automationId= 'admin_sa_confirm_btn' onClick={handleUpdateSkills} color="primary">
                         Yes
                     </Button>
-                    <Button onClick={handleCancel} color="error">
+                    <Button automationId= 'admin_sa_confirm_cancel_btn' onClick={handleCancel} color="error">
                         No
                     </Button>
                 </DialogActions>

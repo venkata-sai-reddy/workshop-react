@@ -212,7 +212,7 @@ const UserProfilePage = ({ user }) => {
     }
 
     return isLoading ? <LoadingPage /> : (
-        <Box p={2} className="profile-page">
+        <Box p={2} className="profile-page" automationId="admin_view_user_prof_page">
             <Grid container spacing={3} xs={{ width: '100%' }} justifyContent="center">
                 <Grid item minWidth={'650px'} xs={12} md={6}>
                     <Card elevation={3}>
@@ -221,16 +221,16 @@ const UserProfilePage = ({ user }) => {
                                 <div className='user-prof-avatar' >
                                     <div style={{ position: 'absolute', top: 10, right: 10 }}>
                                         {!isEditMode && (
-                                            <IconButton aria-label="edit" onClick={handleEditProfile} title='Edit User Profile'>
+                                            <IconButton automationId="admin_up_edit_icon" aria-label="edit" onClick={handleEditProfile} title='Edit User Profile'>
                                                 <EditIcon />
                                             </IconButton>
                                         )}
                                         {isEditMode && (
                                             <>
-                                                <IconButton color="primary" aria-label="save" onClick={handleUpdateProfile} title='Update'>
+                                                <IconButton automationId="admin_up_save_icon" color="primary" aria-label="save" onClick={handleUpdateProfile} title='Update'>
                                                     <SaveIcon />
                                                 </IconButton>
-                                                <IconButton color="error" aria-label="cancel" onClick={handleCancel} title='Cancel'>
+                                                <IconButton automationId="admin_up_cancel_icon" color="error" aria-label="cancel" onClick={handleCancel} title='Cancel'>
                                                     <ClearIcon />
                                                 </IconButton>
                                             </>
@@ -238,7 +238,7 @@ const UserProfilePage = ({ user }) => {
 
 
                                     </div>
-                                    <Avatar alt={userProf.firstName} sx={{ width: 100, height: 100, marginRight: '20px' }} />
+                                    <Avatar automationId="admin_up_avatar" alt={userProf.firstName} sx={{ width: 100, height: 100, marginRight: '20px' }} />
                                 </div>
                             }
                         >
@@ -252,7 +252,7 @@ const UserProfilePage = ({ user }) => {
                                             variant="outlined"
                                             fullWidth
                                             id="user_prof_first_name"
-                                            inputProps={{ automationId: 'edit_user_prof_first_name' }}
+                                            inputProps={{ automationId: 'admin_edit_user_prof_first_name' }}
                                             label="First Name"
                                             style={{ paddingLeft: '10px', paddingRight: '10px' }}
                                             value={userProf.firstName}
@@ -263,7 +263,7 @@ const UserProfilePage = ({ user }) => {
                                             variant="outlined"
                                             fullWidth
                                             id="user_prof_last_name"
-                                            inputProps={{ automationId: 'edit_user_prof_last_name' }}
+                                            inputProps={{ automationId: 'admin_edit_user_prof_last_name' }}
                                             label="last Name"
                                             style={{ paddingLeft: '10px', paddingRight: '10px' }}
                                             value={userProf.lastName}
@@ -272,17 +272,17 @@ const UserProfilePage = ({ user }) => {
                                     </div>
                                 </>) : (
                                 <>
-                                    <Typography variant="h4" className='user-prof-name' gutterBottom>
+                                    <Typography variant="h4" className='user-prof-name' automationId="admin_up_user_name" gutterBottom>
                                         {`${userProf.firstName} ${userProf.lastName}`}
                                     </Typography>
-                                    <Typography variant="subtitle1" color="textSecondary" className='user-prof-type' gutterBottom>
+                                    <Typography automationId="admin_up_user_type" variant="subtitle1" color="textSecondary" className='user-prof-type' gutterBottom>
                                         <WorkOutlineOutlinedIcon /> {userProf.userType}
                                     </Typography>
                                     <div style={{ display: 'flex', justifyContent: 'space-evenly', width: '-webkit-fill-available' }}>
-                                        <Typography sx={{ color: userProf.isActive ? 'green' : 'red' }}>
+                                        <Typography automationId="admin_up_is_active" sx={{ color: userProf.isActive ? 'green' : 'red' }}>
                                             <CircleIcon fontSize='small' sx={{ color: userProf.isActive ? 'green' : 'red' }} />{'Active'}
                                         </Typography>
-                                        <Typography sx={{ color: userProf.isLocked ? 'red' : 'darkgray' }}>
+                                        <Typography automationId="admin_up_is_locked" sx={{ color: userProf.isLocked ? 'red' : 'darkgray' }}>
                                             <CircleIcon fontSize='small' sx={{ textAlign: 'center', color: userProf.isLocked ? 'red' : 'darkgray' }} />{'Locked'}
                                         </Typography>
                                     </div>
@@ -300,7 +300,7 @@ const UserProfilePage = ({ user }) => {
                                             label="User Type"
                                             name='userType'
                                             style={{ paddingLeft: '10px', paddingRight: '10px', marginLeft: '10px' }}
-                                            inputProps={{ automationId: 'edit_user_prof_user_type' }}
+                                            inputProps={{ automationId: 'admin_edit_user_prof_user_type' }}
                                             onChange={(e) => handleChange(e.target.name, e.target.value)}
                                             sx={{ width: '280px', color: 'black' }}
                                         >
@@ -317,7 +317,7 @@ const UserProfilePage = ({ user }) => {
                                                     checked={userProf.isActive}
                                                     onChange={(e) => handleChange(e.target.name, !userProf.isActive)}
                                                     name="isActive"
-                                                    inputProps={{ automationId: 'edit_user_prof_is_active' }}
+                                                    inputProps={{ automationId: 'admin_edit_user_prof_is_active' }}
                                                     color="primary"
                                                 />
                                             }
@@ -329,7 +329,7 @@ const UserProfilePage = ({ user }) => {
                                                     checked={userProf.isLocked}
                                                     onChange={(e) => handleChange(e.target.name, !userProf.isLocked)}
                                                     name="isLocked"
-                                                    inputProps={{ automationId: 'edit_user_prof_is_locked' }}
+                                                    inputProps={{ automationId: 'admin_edit_user_prof_is_locked' }}
                                                     sx={{ marginRight: '10px', paddingRight: '10px' }}
                                                     color='primary'
                                                 />
@@ -349,7 +349,7 @@ const UserProfilePage = ({ user }) => {
                                             id="user_prof_email_id"
                                             fullWidth
                                             style={{ paddingLeft: '10px', paddingRight: '10px' }}
-                                            inputProps={{ automationId: 'edit_user_prof_email_id' }}
+                                            inputProps={{ automationId: 'admin_edit_user_prof_email_id' }}
                                             label="Email Id"
                                             value={userProf.emailId}
                                             disabled
@@ -361,7 +361,7 @@ const UserProfilePage = ({ user }) => {
                                             id="user_prof_phone_number"
                                             fullWidth
                                             style={{ paddingLeft: '10px', paddingRight: '10px' }}
-                                            inputProps={{ automationId: 'edit_user_prof_phone_number' }}
+                                            inputProps={{ automationId: 'admin_edit_user_prof_phone_number' }}
                                             label="Phone Number"
                                             value={userProf.phoneNumber}
                                             onChange={(e) => handleChange(e.target.name, e.target.value)}
@@ -369,10 +369,10 @@ const UserProfilePage = ({ user }) => {
                                     </div>
                                 </>) : (
                                 <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-                                    <Typography variant="body1" className="user-prof-email">
+                                    <Typography variant="body1" className="user-prof-email" automationId="admin_up_email_id">
                                         <EmailOutlinedIcon /> {userProf.emailId}
                                     </Typography>
-                                    <Typography variant="body1" className='user-prof-phone' style={{ marginLeft: '20px' }}>
+                                    <Typography variant="body1" className='user-prof-phone' style={{ marginLeft: '20px' }} automationId="admin_up_phone_number">
                                         <PhoneAndroidOutlinedIcon /> {userProf.phoneNumber}
                                     </Typography>
                                 </div>
@@ -400,7 +400,7 @@ const UserProfilePage = ({ user }) => {
                                             <TextField
                                                 variant="standard"
                                                 id="edit_user_prof_skills"
-                                                inputProps={{ automationId: 'edit_user_prof_skills' }}
+                                                inputProps={{ automationId: 'admin_edit_user_prof_skills' }}
                                                 {...params}
                                                 label="Skills"
                                                 fullWidth
@@ -413,7 +413,7 @@ const UserProfilePage = ({ user }) => {
                                         userProf.skills.length !== 0 &&
                                         <>
                                             <Divider className="user-prof-divider" style={{ margin: '20px 0' }} />
-                                            <Typography variant="h6" className='user-prof-skills'>Skills:
+                                            <Typography variant="h6" className='user-prof-skills' automationId="admin_up_skills">Skills:
                                                 {userProf.skills.map((skill) => (
                                                     <Chip
                                                         key={skill.skillId}
@@ -432,7 +432,7 @@ const UserProfilePage = ({ user }) => {
 
                             < Divider className="user-prof-divider" style={{ margin: '15px 0' }} />
                             <div style={{ display: 'flex', justifyContent: 'space-evenly', width: '-webkit-fill-available' }} >
-                                <Button variant='contained' onClick={handleGeneratePassword}>
+                                <Button variant='contained' onClick={handleGeneratePassword} automationId="admin_up_generate_pass_btn">
                                     {isGenerating ? <CircularProgress style={{ color: 'white', height: '25px', width: '25px' }} /> : 'Generate Password'}
                                 </Button>
                             </div>
@@ -441,34 +441,34 @@ const UserProfilePage = ({ user }) => {
                 </Grid>
             </Grid>
             <Dialog open={openSaveDialog} onClose={handleCancel}>
-                <DialogTitle align='center'>Confirm Changes</DialogTitle>
+                <DialogTitle align='center' automationId="admin_up_confirm_save_title">Confirm Changes</DialogTitle>
                 <DialogContent>
-                    <DialogContentText>
+                    <DialogContentText automationId="admin_up_confirm_save_text">
                         Are you sure you want to save the changes?
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleSaveConfirmation} color="primary">
+                    <Button automationId="admin_up_confirm_save_btn" onClick={handleSaveConfirmation} color="primary">
                         Yes
                     </Button>
-                    <Button onClick={handleCancel} color="error">
+                    <Button automationId="admin_up_confirm_cancel_btn" onClick={handleCancel} color="error">
                         No
                     </Button>
 
                 </DialogActions>
             </Dialog>
             <Dialog open={confirmGenerate} onClose={handleCancel}>
-                <DialogTitle align='center'>Confirm Generate Password</DialogTitle>
+                <DialogTitle align='center' automationId="admin_up_confirm_gen_pass_title">Confirm Generate Password</DialogTitle>
                 <DialogContent>
-                    <DialogContentText>
+                    <DialogContentText automationId="admin_up_confirm_gen_pass_text">
                         Are you sure you want to generate the password?
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleGenerateConfirmation} color="primary">
+                    <Button automationId="admin_up_confirm_gen_pass_btn" onClick={handleGenerateConfirmation} color="primary">
                         Yes
                     </Button>
-                    <Button onClick={handleCancel} color="error">
+                    <Button automationId="admin_up_confirm_gen_pass_cancel_btn" onClick={handleCancel} color="error">
                         No
                     </Button>
 

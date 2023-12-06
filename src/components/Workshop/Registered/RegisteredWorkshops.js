@@ -153,22 +153,22 @@ export default function RegisteredWorkshops() {
 
   return isLoading ? <LoadingPage /> : (
     <Container className='workshop_page'>
-      <Typography variant="h6" className='workshop_title_page'>
+      <Typography automationId= "enrolled_wrkshp_title" variant="h6" className='workshop_title_page'>
         Enrolled Workshops
       </Typography>
       <WorkshopTable data={enrolledWorkshops} columns={columns} forwardUrl={'/view-workshop'}/>
       <Dialog open={openUnEnrollDialog} onClose={handleCancel}>
-        <DialogTitle align='center'>Confirm Delete</DialogTitle>
+        <DialogTitle align='center' automationId="enrolled_wrkshp_del_confirm_title">Confirm Delete</DialogTitle>
         <DialogContent>
-          <DialogContentText>
+          <DialogContentText automationId="enrolled_wrkshp_del_confirm_text">
             Are you sure you want to delete the workshop?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleUnEnrollConfirmation} color="primary">
+          <Button automationId="enrolled_wrkshp_del_confirm_btn" onClick={handleUnEnrollConfirmation} color="primary">
             Yes
           </Button>
-          <Button onClick={handleCancel} color="error">
+          <Button automationId="enrolled_wrkshp_del_cancel_btn" onClick={handleCancel} color="error">
             No
           </Button>
 

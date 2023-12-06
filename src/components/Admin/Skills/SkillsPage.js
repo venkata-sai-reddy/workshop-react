@@ -230,34 +230,34 @@ const SkillsPage = () => {
     return isLoading ? <LoadingPage /> : (
         <Container className='users_page'>
             <Paper elevation={0} sx={{ position: 'relative' }}>
-                <Typography variant="h6" className='users_title_page' sx={{ marginTop: '1rem', marginBottom: '1rem', textAlign: 'center' }}>
+                <Typography variant="h6" automationId = 'admin_skills_page_title' className='users_title_page' sx={{ marginTop: '1rem', marginBottom: '1rem', textAlign: 'center' }}>
                     Skills
                 </Typography>
                 <div style={{ position: 'absolute', top: 5, right: 10 }}>
-                    <Button variant="contained" color="error" onClick={handleAddSkill} sx={{ fontWeight: 'bold' }}>
+                    <Button automationId = 'admin_sp_add_skill_btn' variant="contained" color="error" onClick={handleAddSkill} sx={{ fontWeight: 'bold' }}>
                         <AddIcon /> Add Skill
                     </Button>
                 </div>
             </Paper>
             <AdminTable data={allSkills} columns={columns} />
             <Dialog open={requestConfirm} onClose={handleCancel}>
-                <DialogTitle align='center'>Confirm Update</DialogTitle>
+                <DialogTitle automationId = 'admin_sp_update_confirm_title' align='center'>Confirm Update</DialogTitle>
                 <DialogContent>
-                    <DialogContentText>
+                    <DialogContentText automationId = 'admin_sp_update_confirm_text'>
                         Are you sure you want to {status === messages.text.APPROVED ? 'approve' : 'reject'} the skill?
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleUpdateSkills} color="primary">
+                    <Button automationId = 'admin_sp_update_confirm_btn' onClick={handleUpdateSkills} color="primary">
                         Yes
                     </Button>
-                    <Button onClick={handleCancel} color="error">
+                    <Button automationId = 'admin_sp_update_confirm_cancel_btn' onClick={handleCancel} color="error">
                         No
                     </Button>
                 </DialogActions>
             </Dialog>
             <Dialog open={skillForm} onClose={handleCancel} maxWidth="md" fullWidth PaperProps={{ style: { minWidth: '300px' } }}>
-                <DialogTitle sx={{textAlign:'center'}}>Add Skill</DialogTitle>
+                <DialogTitle sx={{textAlign:'center'}} automationId = 'admin_sp_add_skills_title'>Add Skill</DialogTitle>
                 <DialogContent>
                     <Autocomplete
                         multiple
@@ -277,15 +277,16 @@ const SkillsPage = () => {
                                 {...params}
                                 label="Skills"
                                 fullWidth
+                                inputProps={{automationId: 'admin_sp_add_skills_field'}}
                             />
                         )}
                     />
                 </DialogContent>
                 <DialogActions>
-                <Button onClick={() => setIsAddSkill(true)} color="primary">
+                <Button automationId = 'admin_sp_add_skills_btn' onClick={() => setIsAddSkill(true)} color="primary">
                         Add
                     </Button>
-                    <Button onClick={handleCancel} color="error">
+                    <Button automationId = 'admin_sp_add_skills_cancel_btn' onClick={handleCancel} color="error">
                         Cancel
                     </Button>
                     

@@ -85,7 +85,7 @@ const ChangePassword = ({ handleClose }) => {
   return (
     <Box p={2}>
       <Paper elevation={3} style={{ padding: 20, textAlign: 'center' }}>
-        <Typography variant="h6">Change Password</Typography>
+        <Typography automationId="user_prof_change_pass_title" variant="h6">Change Password</Typography>
         <TextField
           label="Old Password"
           type="password"
@@ -93,6 +93,7 @@ const ChangePassword = ({ handleClose }) => {
           fullWidth
           margin="normal"
           value={oldPassword}
+          inputProps={{automationId:'change_pass_old_pass_field'}}
           onChange={(e) => setOldPassword(e.target.value)}
         />
         <TextField
@@ -102,6 +103,7 @@ const ChangePassword = ({ handleClose }) => {
           fullWidth
           margin="normal"
           value={newPassword}
+          inputProps={{automationId:'change_pass_new_pass_field'}}
           onChange={(e) => setNewPassword(e.target.value)}
         />
         <TextField
@@ -111,30 +113,31 @@ const ChangePassword = ({ handleClose }) => {
           fullWidth
           margin="normal"
           value={confirmPassword}
+          inputProps={{automationId:'change_pass_confirm_pass_field'}}
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
         <Divider style={{ margin: '20px 0' }} />
         <Box display="flex" justifyContent="space-between">
-          <Button variant="contained" color="primary" onClick={handleChangePassword}>
+          <Button automationId="change_pass_save_btn" variant="contained" color="primary" onClick={handleChangePassword}>
             Save Password
           </Button>
-          <Button variant="contained" color="error" onClick={handleCancelChangePassword}>
+          <Button automationId="change_pass_cancel_btn" variant="contained" color="error" onClick={handleCancelChangePassword}>
             Cancel
           </Button>
         </Box>
       </Paper>
       <Dialog open={openSaveDialog} onClose={handleCancel}>
-        <DialogTitle align='center'>Confirm Password Change</DialogTitle>
+        <DialogTitle align='center' automationId="change_pass_confirm_title">Confirm Password Change</DialogTitle>
         <DialogContent>
-          <DialogContentText>
+          <DialogContentText automationId="change_pass_confirm_text">
             Are you sure you want to change the password?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleSaveConfirmation} color="primary">
+          <Button automationId='change_pass_save_confirm_btn' onClick={handleSaveConfirmation} color="primary">
             Yes
           </Button>
-          <Button onClick={handleCancel} color="error">
+          <Button automationId='change_pass_cancel_confirm_btn' onClick={handleCancel} color="error">
             No
           </Button>
 
