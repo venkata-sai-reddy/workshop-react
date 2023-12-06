@@ -73,6 +73,7 @@ const ViewWorkshop = () => {
         setIsLoading(false);
       } catch (error) {
         console.error("Error : ", error);
+        sessionUnAuthCheck(error) && navigate('/logout');
         setIsLoading(true);
       }
     };
@@ -281,6 +282,7 @@ const ViewWorkshop = () => {
         setIsLoading(false);
       } catch (error) {
         console.error('Error : ', error);
+        sessionUnAuthCheck(error) && navigate('/logout');
         setIsLoading(false);
       }
     };
@@ -385,21 +387,21 @@ const ViewWorkshop = () => {
         <Paper elevation={3} sx={{ padding: 3, position: 'relative' }}>
           {userState.user.userId === workshop.createdUserId ? (
             <div style={{ position: 'absolute', top: 10, right: 10 }}>
-              <IconButton aria-label="notify" onClick={handleNotifyClick} title='Notify'>
+              <IconButton aria-label="notify" automationId='admin_custom_notify_wrkshp' onClick={handleNotifyClick} title='Notify'>
                 <ForwardToInboxIcon />
               </IconButton>
               {!isEditMode && (
-                <IconButton aria-label="edit" onClick={handleEditClick} title='Edit Workshop'>
+                <IconButton aria-label="edit" automationId='admin_edit_wrkshp' onClick={handleEditClick} title='Edit Workshop'>
                   <EditIcon />
                 </IconButton>
               )}
               {isEditMode && (
-                <IconButton color="primary" aria-label="save" onClick={handleSaveClick} title='Update Workshop'>
+                <IconButton color="primary" automationId='admin_save_wrkshp' aria-label="save" onClick={handleSaveClick} title='Update Workshop'>
                   <SaveIcon />
                 </IconButton>
               )}
 
-              <IconButton color="error" aria-label="delete" onClick={handleDeleteClick} title='Delete Workshop'>
+              <IconButton color="error" automationId='admin_delete_wrkshp' aria-label="delete" onClick={handleDeleteClick} title='Delete Workshop'>
                 <DeleteIcon />
               </IconButton>
 
@@ -408,11 +410,11 @@ const ViewWorkshop = () => {
           ) : (
             <div style={{ position: 'absolute', top: 10, right: 10 }}>
               {isEnrolled ? (
-                <Button variant="contained" color="error" onClick={handleUnEnroll} sx={{ fontWeight: 'bold' }}>
+                <Button variant="contained" color="error" automationId="user_unenroll_btn" onClick={handleUnEnroll} sx={{ fontWeight: 'bold' }}>
                   {isEnrolling ? <CircularProgress style={{ color: 'white', height: '25px', width: '25px' }} /> : 'UnEnroll'}
                 </Button>
               ) : (
-                <Button variant="contained" color="error" onClick={handleEnroll} sx={{ fontWeight: 'bold' }}>
+                <Button variant="contained" color="error" automationId="user_enroll_btn" onClick={handleEnroll} sx={{ fontWeight: 'bold' }}>
                   {isEnrolling ? <CircularProgress style={{ color: 'white', height: '25px', width: '25px' }} /> : 'Enroll'}
                 </Button>
               )}
@@ -427,7 +429,7 @@ const ViewWorkshop = () => {
                 variant="standard"
                 fullWidth
                 id="edit_workshop_title_field"
-                inputProps={{ automationId: 'edit_workshop_title_field' }}
+                inputProps={{ automationId: 'edit_wrkshp_title_field' }}
                 label="Workshop title"
                 value={updatedWorkshop.workshopName}
                 onChange={(e) => handleChange(e.target.name, e.target.value)}
@@ -438,18 +440,18 @@ const ViewWorkshop = () => {
             )}
           </Typography>
           {!isEditMode && (
-            <Typography variant="subtitle1" color="textSecondary" gutterBottom>
+            <Typography variant="subtitle1" color="textSecondary" automationId="wrkshp_title_field" gutterBottom>
               Instructor : {workshop.createdUser}
             </Typography>
           )}
-          <Typography variant="body1" gutterBottom>
+          <Typography variant="body1" automationId="wrkshp_desc_field" gutterBottom>
             {' '}
             {isEditMode ? (
               <TextField
                 name="description"
                 fullWidth
                 id="edit_workshop_description_field"
-                inputProps={{ automationId: 'edit_workshop_description_field' }}
+                inputProps={{ automationId: 'edit_wrkshp_desc_field' }}
                 label="Description"
                 multiline
                 value={updatedWorkshop.description}
@@ -480,7 +482,7 @@ const ViewWorkshop = () => {
                     <TextField
                       variant="standard"
                       id="edit_workshop_skills_field"
-                      inputProps={{ automationId: 'edit_workshop_skills_field' }}
+                      inputProps={{ automationId: 'edit_wrkshp_skills_field' }}
                       {...params}
                       label="Skills"
                       fullWidth
@@ -488,7 +490,7 @@ const ViewWorkshop = () => {
                   )}
                 />
               ) : (
-                <Typography variant="body1">
+                <Typography variant="body1" automationId="wrkshp_skills_field">
                   Skills : {updatedWorkshop.selectedSkills.map((skill) => skill.skillName).join(', ')}
                 </Typography>
               )}
@@ -502,13 +504,13 @@ const ViewWorkshop = () => {
                     onChange={(date) => handleChange('workshopDate', new Date(date).toLocaleDateString())}
                     slotProps={{
                       textField: {
-                        inputProps: { automationId: 'edit_workshop_date_field' },
+                        inputProps: { automationId: 'edit_wrkshp_date_field' },
                       },
                     }}
                   />
                 </LocalizationProvider>
               ) : (
-                <Typography variant="body1">
+                <Typography variant="body1" automationId="wrkshp_date_field">
                   Workshop Date : {new Date(`${updatedWorkshop.workshopDate}T12:00:00Z`).toLocaleString('en-US', {
                     year: 'numeric',
                     month: 'long',
@@ -533,7 +535,7 @@ const ViewWorkshop = () => {
                     <TextField
                       variant="standard"
                       id="edit_workshop_location_field"
-                      inputProps={{ automationId: 'edit_workshop_location_field' }}
+                      inputProps={{ automationId: 'edit_wrkshp_loc_field' }}
                       {...params}
                       label="Location"
                       fullWidth
@@ -541,7 +543,7 @@ const ViewWorkshop = () => {
                   )}
                 />
               ) : (
-                <Typography variant="body1">Location : {updatedWorkshop.venue}</Typography>
+                <Typography variant="body1" automationId="wrkshp_loc_field">Location : {updatedWorkshop.venue}</Typography>
               )}
             </Grid>
             <Grid item xs={6}>
@@ -553,13 +555,13 @@ const ViewWorkshop = () => {
                     onChange={(date) => handleChange('startTime', new Date(date))}
                     slotProps={{
                       textField: {
-                        inputProps: { automationId: 'edit_workshop_start_time_field' },
+                        inputProps: { automationId: 'edit_wrkshp_start_time_field' },
                       },
                     }}
                   />
                 </LocalizationProvider>
               ) : (
-                <Typography variant="body1">
+                <Typography variant="body1" automationId="wrkshp_start_time_field">
                   Start Time : {new Date(updatedWorkshop.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </Typography>
               )}
@@ -573,13 +575,13 @@ const ViewWorkshop = () => {
                     onChange={(date) => handleChange('endTime', new Date(date))}
                     slotProps={{
                       textField: {
-                        inputProps: { automationId: 'edit_workshop_end_time_field' },
+                        inputProps: { automationId: 'edit_wrkshp_end_time_field' },
                       },
                     }}
                   />
                 </LocalizationProvider>
               ) : (
-                <Typography variant="body1">
+                <Typography variant="body1" automationId="wrkshp_end_time_field">
                   End Time : {new Date(updatedWorkshop.endTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </Typography>
               )}
@@ -589,14 +591,14 @@ const ViewWorkshop = () => {
                 <TextField
                   variant="standard"
                   id="edit_workshop_capacity_field"
-                  inputProps={{ automationId: 'edit_workshop_capacity_field' }}
+                  inputProps={{ automationId: 'edit_wrkshp_cap_field' }}
                   label="Capacity"
                   type="number"
                   value={updatedWorkshop.capacity}
                   onChange={(e) => handleChange('capacity', e.target.value)}
                 />
               ) : (
-                <Typography variant="body1">Capacity : {updatedWorkshop.enrollCount}/{updatedWorkshop.capacity}</Typography>
+                <Typography variant="body1" automationId="wrkshp_cap_field">Capacity : {updatedWorkshop.enrollCount}/{updatedWorkshop.capacity}</Typography>
               )}
             </Grid>
             <Grid item xs={6}>
@@ -605,7 +607,7 @@ const ViewWorkshop = () => {
                   variant="standard"
                   fullWidth
                   id="edit_workshop_meetingURL_field"
-                  inputProps={{ automationId: 'edit_workshop_meetingURL_field' }}
+                  inputProps={{ automationId: 'edit_wrkshp_meeting_URL_field' }}
                   label="Meeting URL"
                   type="text"
                   value={updatedWorkshop.meetingURL}
@@ -614,7 +616,7 @@ const ViewWorkshop = () => {
               )}
               {!isEditMode && workshop.venue === 'Online' && (
 
-                <Typography variant="body1">
+                <Typography variant="body1" automationId="wrkshp_meeting_URL_field">
                   Meeting URL :
                   <a href={workshop.meetingURL} target="_blank" rel="noopener noreferrer">
                     Join here
@@ -632,11 +634,10 @@ const ViewWorkshop = () => {
               </DialogContentText>
             </DialogContent>
             <DialogActions>
-
-              <Button onClick={handleSaveConfirmation} color="primary">
+              <Button onClick={handleSaveConfirmation} automationId="wrkshp_edit_save_confirm" color="primary">
                 Yes
               </Button>
-              <Button onClick={handleCancel} color="error">
+              <Button automationId="wrkshp_edit_save_cancel" onClick={handleCancel} color="error">
                 No
               </Button>
             </DialogActions>
@@ -650,10 +651,10 @@ const ViewWorkshop = () => {
             </DialogContent>
             <DialogActions>
 
-              <Button onClick={handleDeleteConfirmation} color="primary">
+              <Button automationId="wrkshp_del_confirm" onClick={handleDeleteConfirmation} color="primary">
                 Yes
               </Button>
-              <Button onClick={handleCancel} color="error">
+              <Button automationId="wrkshp_del_cancel" onClick={handleCancel} color="error">
                 No
               </Button>
             </DialogActions>
@@ -662,9 +663,9 @@ const ViewWorkshop = () => {
         <ToastContainer />
         <NotifyWorkshop open={openNotifyMessageDialog} onClose={handleCloseNotifyMessage} workshopId={workshopId} />
       </Container>
-      {userState.user.userId === workshop.createdUserId &&
+      {(userState.user.userId === workshop.createdUserId || userState.user.userType === 'ADMIN') &&
         (<Container maxWidth="md" sx={{ marginTop: 4, minWidth: '45%' }}>
-          <Paper elevation={3} sx={{ marginTop: '10px', padding: 3, position: 'relative' }}>
+          <Paper elevation={3} sx={{ marginTop: '10px', padding: 3, position: 'relative' }} automationId="wrkshp_reg_users_view">
             <Typography variant='subtitle1' sx={{ textAlign: 'center' }}> Registered Users </Typography>
             <UsersTable data={workshop.registeredUsers} columns={columns} />
           </Paper>

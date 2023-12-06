@@ -70,7 +70,7 @@ export default function SearchWorkshop() {
 
   return isLoading ? <LoadingPage /> : (
     <Container  className='workshop_page'>
-      <Typography variant="h6"  className='workshop_title_page' sx={{ marginTop: '1rem', marginBottom: '1rem' }}>
+      <Typography variant="h6" automationId='wrkshp_title_page' className='workshop_title_page' sx={{ marginTop: '1rem', marginBottom: '1rem' }}>
         Workshops
       </Typography>
       <WorkshopTable data={allWorkshops} columns={columns}  forwardUrl={'/view-workshop'}/>

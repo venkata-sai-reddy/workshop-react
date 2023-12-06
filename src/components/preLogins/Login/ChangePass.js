@@ -4,7 +4,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
-import { CircularProgress, DialogContentText, TextField, Typography } from '@mui/material';
+import { CircularProgress, TextField, Typography } from '@mui/material';
 import {
     ToastContainer,
     toast,
@@ -18,13 +18,11 @@ const ChangePass = ({ open, handleClose }) => {
     const [tempPassword, setTempPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [openSaveDialog, setOpenSaveDialog] = useState(false);
     const [isUpdating, setIsUpdating] = useState(false);
     const navigate = useNavigate();
   
-    const handleSaveConfirmation = async () => {
+    const handleChangePassword = async () => {
       setIsUpdating(true)
-      setOpenSaveDialog(false);
       try {
         const data = {
           'currentPassword': tempPassword,
@@ -73,16 +71,7 @@ const ChangePass = ({ open, handleClose }) => {
         handleClose();
       }
     };
-  
-    const handleCancel = () => {
-      setOpenSaveDialog(false);
-      handleClose();
-    }
-  
-    const handleChangePassword = () => {
-      setOpenSaveDialog(true);
-    };
-  
+
     const handleCancelChangePassword = () => {
       setTempPassword('');
       setNewPassword('');
@@ -130,23 +119,6 @@ const ChangePass = ({ open, handleClose }) => {
                     Cancel
                 </Button>
             </DialogActions>
-            <Dialog open={openSaveDialog} onClose={handleCancel}>
-                <DialogTitle align='center'>Confirm Password Change</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Are you sure you want to change the password?
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleSaveConfirmation} color="primary">
-                        Yes
-                    </Button>
-                    <Button onClick={handleCancel} color="error">
-                        No
-                    </Button>
-
-                </DialogActions>
-            </Dialog>
             <Dialog open={isUpdating} >
                 <DialogContent>
                     <CircularProgress size={100} thickness={4} style={{ color: 'red' }} />

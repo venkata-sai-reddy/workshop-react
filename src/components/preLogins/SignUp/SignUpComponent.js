@@ -59,7 +59,6 @@ const SignUpComponent = () => {
         },
         validationSchema: signUpValidationSchema,
         onSubmit: (values) => {
-            console.log(values)
             handleSubmit(values)
         },
     });
@@ -219,7 +218,6 @@ const SignUpComponent = () => {
                             id="sign_up_phone_number"
                             className='sign_up_form_fields'
                             size='small'
-                            required
                             inputProps={{ automationId: 'sign_up_phone_number' }}
                             label="Phone Number"
                             value={formik.values.phoneNumber}

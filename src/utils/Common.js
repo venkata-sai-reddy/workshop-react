@@ -113,8 +113,8 @@ export function getTimelineStatus(startTime, endTime) {
 }
 
 export const displayName = (name) => {
-  if (name.length > 28) {
-    return name.slice(0, 28) + '...'; 
+  if (name.length > 25) {
+    return name.slice(0, 25) + '...'; 
   } else {
     return name;
   }

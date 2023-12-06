@@ -24,7 +24,6 @@ import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 
 const WorkshopsTable = ({ data: initialData, columns, forwardUrl }) => {
 
-
   const [data, setData] = useState(initialData);
   const [filter, setFilter] = useState(false);
   const [globalFilter, setGlobalFilter] = useState('');
@@ -78,7 +77,7 @@ const WorkshopsTable = ({ data: initialData, columns, forwardUrl }) => {
             title="Column Filter"
             placement='right-end'
           >
-            <FilterListIcon style={{ cursor: 'pointer' }} title="filter" onClick={() => setFilter(!filter)} />
+            <FilterListIcon style={{ cursor: 'pointer' }} title="filter" automationId="table_column_filter" onClick={() => setFilter(!filter)} />
           </Tooltip>
         </div>
         <div>
@@ -87,6 +86,9 @@ const WorkshopsTable = ({ data: initialData, columns, forwardUrl }) => {
             placeholder="Search"
             value={globalFilter || ''}
             onChange={(e) => setGlobalFilter(e.target.value)}
+            inputProps={{
+              automationId: 'global_search_content'
+            }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -116,6 +118,7 @@ const WorkshopsTable = ({ data: initialData, columns, forwardUrl }) => {
                       top: 0,
                       zIndex: 1,
                     }}
+                    automationId={'tbl_hdr_name_'+column.id}
                   >
                     {column.render('Header')}
                     <span style={{ marginLeft: '4px' }}>
@@ -135,12 +138,14 @@ const WorkshopsTable = ({ data: initialData, columns, forwardUrl }) => {
           ))}
         </TableHead>
         <TableBody {...getTableBodyProps()}>
-          {page.map((row) => {
+          {page.map((row, index) => {
             prepareRow(row);
             return (
               <TableRow {...row.getRowProps()}>
                 {row.cells.map((cell) => (
+                  
                   <TableCell
+                    automationId={'table_row_data_'+cell.column.id+'_'+index}
                     {...cell.getCellProps()}
                     sx={{ cursor: cell.column.id !== 'workshopId' ? 'pointer' : 'default' }}
                     onClick={() => {
@@ -173,23 +178,27 @@ const WorkshopsTable = ({ data: initialData, columns, forwardUrl }) => {
           <KeyboardDoubleArrowLeftIcon
             sx={{ cursor: 'pointer' }}
             onClick={() => gotoPage(0)} disabled={pageIndex === 0}
+            automationId='pagination_goto_start'
           />
           {' '}
           <NavigateBeforeIcon 
             sx={{ cursor: 'pointer' }}
             onClick={() => gotoPage(pageIndex - 1)} disabled={pageIndex === 0}
+            automationId='pagination_goto_previous'
           />
           {' '}
           Page {pageIndex + 1} of {Math.ceil(data.length / pageSize)}{' '}
           <NavigateNextIcon
             sx={{ cursor: 'pointer' }}
             onClick={() => gotoPage(pageIndex + 1)} disabled={pageIndex === Math.ceil(data.length / pageSize) - 1}
+            automationId='pagination_goto_next'
           />
           {' '}
           <KeyboardDoubleArrowRightIcon
             sx={{ cursor: 'pointer' }}
             onClick={() => gotoPage(Math.ceil(data.length / pageSize) - 1)}
             disabled={pageIndex === Math.ceil(data.length / pageSize) - 1}
+            automationId='pagination_goto_last'
           />
         </div>
         <div>
@@ -201,9 +210,10 @@ const WorkshopsTable = ({ data: initialData, columns, forwardUrl }) => {
                 setPageSize(Number(e.target.value));
                 setData(initialData);
               }}
+              automationId="records_per_page"
             >
               {[5, 10, 25, 50, 100].map((pageSizeOption) => (
-                <option key={pageSizeOption} value={pageSizeOption}>
+                <option key={pageSizeOption} value={pageSizeOption} automationId={'select_record_per_page_'+pageSizeOption}>
                   {pageSizeOption}
                 </option>
               ))}

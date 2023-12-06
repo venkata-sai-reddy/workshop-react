@@ -256,7 +256,7 @@ const ProfilePage = ({ user, isPasswordShow, handleShowPassword }) => {
               )}
 
 
-              {isEditMode ? (
+              {(isEditMode && userProf.userType !== 'ADMIN') ? (
                 <>
                   <Divider className="user-prof-divider" style={{ margin: '20px 0' }} />
                   <Autocomplete

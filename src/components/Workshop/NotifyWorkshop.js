@@ -67,7 +67,6 @@ const NotifyWorkshop = ({ open, onClose, workshopId }) => {
     }
 
     const handleSendNotification = () => {
-
         if (!message || String(message).trim !== '') {
             sendMessage();
         }
@@ -85,6 +84,7 @@ const NotifyWorkshop = ({ open, onClose, workshopId }) => {
                     onChange={(e) => {
                         handleChange("subject", e.target.value);
                     }}
+                    inputProps={{ automationId: 'custom_notify_subject_field' }}
                 />
                 <TextField
                     multiline
@@ -95,14 +95,15 @@ const NotifyWorkshop = ({ open, onClose, workshopId }) => {
                     onChange={(e) => {
                         handleChange("message", e.target.value);
                     }}
+                    inputProps={{ automationId: 'custom_notify_msg_field' }}
                 />
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleCancel} color="primary">
-                    Cancel
-                </Button>
-                <Button onClick={handleSendNotification} color="primary">
+                <Button automationId = "custom_notify_send_btn" onClick={handleSendNotification} color="primary">
                     Send
+                </Button>
+                <Button automationId="custom_notify_cancel_btn" onClick={handleCancel} color="primary">
+                    Cancel
                 </Button>
             </DialogActions>
         </Dialog>

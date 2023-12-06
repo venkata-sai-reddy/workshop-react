@@ -38,7 +38,7 @@ const HomePage = () => {
         navigate('/view-workshop', { state: { workshopId: workshopData.workshopId } });
     };
 
-    const sortedWorkshops =  isLoading ? [] : [...allWorkshops].sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
+    const sortedWorkshops = isLoading ? [] : [...allWorkshops].sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
 
     return (
         <div>
@@ -46,25 +46,26 @@ const HomePage = () => {
             {isLoading ? (
                 <LoadingPage />
             ) : (
-                <Container className="mt-4" style={{padding:'10px', marginBottom:'20px', borderTopColor:'#CC0000', borderTopStyle:'solid'}}>
-                    <h5>Upcoming Workshops</h5>
-                    <Carousel interval={null} style={{color:'black'}} controls={true}>
+                <Container className="mt-4" style={{ padding: '10px', marginBottom: '20px', borderTopColor: '#CC0000', borderTopStyle: 'solid' }}>
+                    <h5 automationId="home_page_upcmg_wrkshp_title">Upcoming Workshops</h5>
+                    <Carousel interval={null} style={{ color: 'black' }} controls={true}  >
                         {sortedWorkshops.map((workshop, index) => (
                             index % 3 === 0 ? (
                                 <Carousel.Item key={workshop.workshopId}>
                                     <Row className="d-flex justify-content-around">
-                                        {sortedWorkshops.slice(index, index + 3).map((item) => (
+                                        {sortedWorkshops.slice(index, index + 3).map((item, ind) => (
                                             <Col key={item.workshopId} md={4}>
-                                                <Card style={{ cursor: 'pointer', width: '100%',  height: '250px' }} onClick={() => handleCardClick(item)}>
+                                                <Card style={{ cursor: 'pointer', width: '100%', height: '250px' }} onClick={() => handleCardClick(item)}>
                                                     <Card.Body>
-                                                        <Card.Title style={{padding: '10px', justifyContent: 'space-between'}}>
-                                                            <div style={{justifyContent: 'space-between', display:'flex', width: '100%'}}>
-                                                                <div>{displayName(item.workshopName)}</div>
-                                                                <div>{item.isUserEnrolled && <HowToRegIcon style={{color: 'green'}}/>}</div></div>
+                                                        <Card.Title style={{ padding: '10px', justifyContent: 'space-between' }}>
+                                                            <div style={{ justifyContent: 'space-between', display: 'flex', width: '100%' }}>
+                                                                <div automationId={'home_upcmg_wrkshp_name_' + (index + ind)}>{displayName(item.workshopName)}</div>
+                                                                <div> {item.isUserEnrolled && <HowToRegIcon automationId={'home_upcmg_wrkshp_enrl_' + (index + ind)} style={{ color: 'green' }} />}</div>
+                                                            </div>
                                                         </Card.Title>
 
-                                                        <Card.Text><Code className="mr-2" /> {item.selectedSkills.map(skill => skill.skillName).join(', ')}</Card.Text>
-                                                        <Card.Text>
+                                                        <Card.Text automationId={'home_upcmg_wrkshp_skills_' + (index + ind)}><Code className="mr-2" /> {item.selectedSkills.map(skill => skill.skillName).join(', ')}</Card.Text>
+                                                        <Card.Text automationId={'home_upcmg_wrkshp_time_' + (index + ind)}>
                                                             <AccessTime className="mr-2" />
                                                             {new Date(item.startTime).toLocaleDateString('en-US', {
                                                                 year: 'numeric',
@@ -75,10 +76,12 @@ const HomePage = () => {
                                                                 minute: 'numeric',
                                                             })}
                                                         </Card.Text>
-                                                        <Card.Text>
+                                                        <Card.Text automationId={'home_upcmg_wrkshp_venue_' + (index + ind)}>
                                                             <LocationOn className="mr-2" /> {item.venue}</Card.Text>
-                                                        <Card.Text><Groups3Icon className="mr-2" /> {item.capacity-item.enrollCount}</Card.Text>
-                                                        
+                                                        <Card.Text automationId={'home_upcmg_wrkshp_cap_' + (index + ind)}>
+                                                            <Groups3Icon className="mr-2" /> {item.capacity - item.enrollCount}
+                                                        </Card.Text>
+
                                                     </Card.Body>
                                                 </Card>
                                             </Col>

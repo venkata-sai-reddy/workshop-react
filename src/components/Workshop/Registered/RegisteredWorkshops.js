@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { deleteEnrolledWorkshop, saveRegisteredWorkshops } from '../../../store/reducers/WorkshopReducers';
 import { LoadingPage } from '../../Loading/Loading';
 import WorkshopTable from '../WorkshopTable';

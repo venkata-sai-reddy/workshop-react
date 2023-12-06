@@ -9,6 +9,7 @@ import { componentsMap } from '../../utils/ComponentPagesMap';
 import WorkshopComponent from '../Workshop/WorkshopComponent';
 import HomePage from './HomePage';
 import Profile from '../Profile/Profile';
+import AdminPage from '../Admin/AdminPage';
 export const HomeComponent = (props) => {
 
     const { path } = props;
@@ -30,7 +31,7 @@ export const HomeComponent = (props) => {
             <NavigationBar logout={performLogout} user={userState?.user} />
             <Container >
                 {componentsMap.Workshop.includes(path) ? (<WorkshopComponent path={path} />) : (
-                    path === '/profile' ? (<Profile />) : (<HomePage />) 
+                    path === '/profile' ? (<Profile />) : componentsMap.Admin.includes(path) ? (<AdminPage path={path} />) : (<HomePage />) 
                 )}
             </Container>
         </Container>

@@ -82,43 +82,43 @@ function NavigationBar(props) {
 
   const handleRequestWorkshop = async (data) => {
     try {
-        const response = await requestWorkshop(data);
-        if (response.data === true) {
-            toast.success('Workshop Requested Successfully!', {
-                position: 'top-right',
-                autoClose: 5000,
-                hideProgressBar: true,
-                pauseOnHover: true,
-                closeOnClick: true,
-                closeButton: false,
-                draggable: false
-            });
-        } else {
-            toast.error('Workshop Request Failed!', {
-                position: 'top-right',
-                autoClose: 5000,
-                hideProgressBar: true,
-                pauseOnHover: true,
-                closeOnClick: true,
-                closeButton: false,
-                draggable: false
-            });
-        }
-    } catch (error) {
-        console.error("Error : ", error);
-        sessionUnAuthCheck(error) && navigate('/logout');
-        toast.error(error?.response?.data?.message, {
-            position: 'top-right',
-            autoClose:10000,
-            hideProgressBar: true,
-            pauseOnHover: true,
-            closeOnClick: false,
-            closeButton: true,
-            draggable: false
+      const response = await requestWorkshop(data);
+      if (response.data === true) {
+        toast.success('Workshop Requested Successfully!', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: true,
+          pauseOnHover: true,
+          closeOnClick: true,
+          closeButton: false,
+          draggable: false
         });
+      } else {
+        toast.error('Workshop Request Failed!', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: true,
+          pauseOnHover: true,
+          closeOnClick: true,
+          closeButton: false,
+          draggable: false
+        });
+      }
+    } catch (error) {
+      console.error("Error : ", error);
+      sessionUnAuthCheck(error) && navigate('/logout');
+      toast.error(error?.response?.data?.message, {
+        position: 'top-right',
+        autoClose: 10000,
+        hideProgressBar: true,
+        pauseOnHover: true,
+        closeOnClick: false,
+        closeButton: true,
+        draggable: false
+      });
     }
     handleCloseDialog();
-};
+  };
 
   return (
     <AppBar id='home_navbar' position="sticky">
@@ -153,6 +153,7 @@ function NavigationBar(props) {
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
               color="inherit"
+              automationId="home_small_menu"
             >
               <MenuIcon />
             </IconButton>
@@ -176,7 +177,12 @@ function NavigationBar(props) {
             >
               {navMenu.map(([page, url]) => (
                 <MenuItem key={page} onClick={() => handleMenuItemClick(url, handleCloseNavMenu, false)}>
-                  <Typography textAlign="center">{page.replace("_", " ")}</Typography>
+                  <Typography
+                    textAlign="center"
+                    automationId={'home_menu_' + page}
+                  >
+                    {page.replace("_", " ")}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -208,6 +214,7 @@ function NavigationBar(props) {
                   key={page}
                   onClick={() => handleMenuItemClick(content, handleCloseNavMenu, false)}
                   sx={{ my: 2, color: 'white', display: 'block' }}
+                  automationId={'home_nav_menu_' + page}
                 >
                   {page}
                 </Button>
@@ -218,6 +225,7 @@ function NavigationBar(props) {
                     key={page}
                     onClick={() => handleMenuItemClick(content, handleCloseContMenu, true)}
                     sx={{ my: 2, color: 'white', display: 'block' }}
+                    automationId={'home_nav_menu_lis_' + page}
                   >
                     {page}
                   </Button>
@@ -240,7 +248,12 @@ function NavigationBar(props) {
             open={Boolean(anchorElCont)}
             onClose={handleCloseContMenu}>
             {content?.map(([page, url]) => (
-              <MenuItem key={page} onClick={() => handleMenuItemClick(url, handleCloseContMenu, false)}>
+              <MenuItem
+                key={page}
+                automationId={'home_nav_lis_btn_'+page}
+                onClick={() => handleMenuItemClick(url, handleCloseContMenu, false)}
+              >
+
                 <Typography textAlign="center">{page.replace("_", " ")}</Typography>
               </MenuItem>
             ))}
@@ -282,7 +295,7 @@ function NavigationBar(props) {
           </Box>
         </Toolbar>
       </Container>
-      <RequestWorkshop open={dialogOpen} onClose={handleCloseDialog} handleRequest={handleRequestWorkshop}/>
+      <RequestWorkshop open={dialogOpen} onClose={handleCloseDialog} handleRequest={handleRequestWorkshop} />
       <ToastContainer />
     </AppBar>
   );

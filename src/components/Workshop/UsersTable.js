@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTable, useGlobalFilter, useSortBy, usePagination, useFilters } from 'react-table';
 import {
   InputAdornment,
@@ -72,7 +72,7 @@ const UsersTable = ({ data: initialData, columns }) => {
             title="Column Filter"
             placement='right-end'
           >
-            <FilterListIcon style={{ cursor: 'pointer' }} title="filter" onClick={() => setFilter(!filter)} />
+            <FilterListIcon automationId="table_column_filter" style={{ cursor: 'pointer' }} title="filter" onClick={() => setFilter(!filter)} />
           </Tooltip>
         </div>
         <div>
@@ -81,6 +81,7 @@ const UsersTable = ({ data: initialData, columns }) => {
             placeholder="Search"
             value={globalFilter || ''}
             onChange={(e) => setGlobalFilter(e.target.value)}
+            inputProps={{ automationId: 'users_global_filter' }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -91,7 +92,7 @@ const UsersTable = ({ data: initialData, columns }) => {
           />
         </div>
       </div>
-      <Table {...getTableProps()} className="workshops-table">
+      <Table {...getTableProps()} className="users-table">
         <TableHead>
           {headerGroups.map((headerGroup) => (
             <TableRow {...headerGroup.getHeaderGroupProps()}>
@@ -110,6 +111,7 @@ const UsersTable = ({ data: initialData, columns }) => {
                       top: 0,
                       zIndex: 1,
                     }}
+                    automationId={'tbl_hdr_name_' + column.id}
                   >
                     {column.render('Header')}
                     <span style={{ marginLeft: '4px' }}>
@@ -129,12 +131,13 @@ const UsersTable = ({ data: initialData, columns }) => {
           ))}
         </TableHead>
         <TableBody {...getTableBodyProps()}>
-          {page.map((row) => {
+          {page.map((row, index) => {
             prepareRow(row);
             return (
               <TableRow {...row.getRowProps()}>
                 {row.cells.map((cell) => (
                   <TableCell
+                    automationId={'table_row_data_' + cell.column.id + '_' + index}
                     {...cell.getCellProps()}
                   >
                     {cell.render('Cell')}
@@ -161,23 +164,27 @@ const UsersTable = ({ data: initialData, columns }) => {
           <KeyboardDoubleArrowLeftIcon
             sx={{ cursor: 'pointer' }}
             onClick={() => gotoPage(0)} disabled={pageIndex === 0}
+            automationId='pagination_goto_start'
           />
           {' '}
-          <NavigateBeforeIcon 
+          <NavigateBeforeIcon
             sx={{ cursor: 'pointer' }}
             onClick={() => gotoPage(pageIndex - 1)} disabled={pageIndex === 0}
+            automationId='pagination_goto_previous'
           />
           {' '}
           Page {pageIndex + 1} of {Math.ceil(data.length / pageSize)}{' '}
           <NavigateNextIcon
             sx={{ cursor: 'pointer' }}
             onClick={() => gotoPage(pageIndex + 1)} disabled={pageIndex === Math.ceil(data.length / pageSize) - 1}
+            automationId='pagination_goto_next'
           />
           {' '}
           <KeyboardDoubleArrowRightIcon
             sx={{ cursor: 'pointer' }}
             onClick={() => gotoPage(Math.ceil(data.length / pageSize) - 1)}
             disabled={pageIndex === Math.ceil(data.length / pageSize) - 1}
+            automationId='pagination_goto_last'
           />
         </div>
         <div>
@@ -189,9 +196,10 @@ const UsersTable = ({ data: initialData, columns }) => {
                 setPageSize(Number(e.target.value));
                 setData(initialData);
               }}
+              automationId="records_per_page"
             >
               {[5, 10, 25, 50, 100].map((pageSizeOption) => (
-                <option key={pageSizeOption} value={pageSizeOption}>
+                <option key={pageSizeOption} value={pageSizeOption} automationId={'select_record_per_page_'+pageSizeOption}>
                   {pageSizeOption}
                 </option>
               ))}

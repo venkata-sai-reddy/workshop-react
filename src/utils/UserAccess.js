@@ -31,6 +31,7 @@ const userAccess = {
         '/view-registered-workshops',
         '/view-requested-workshops',
         '/all-workshops',
+        '/create-user',
         '/profile',
         '/all-profiles'
     ]
@@ -59,6 +60,21 @@ export const userNavLeftPages = {
             Enrolled_Workshops: '/view-registered-workshops',
             Requested_Skills: '/view-requested-workshops'
         }
+    },
+    'ADMIN': {
+        Home: '/home',
+        Workshop: {
+            View: '/workshop',
+            Create: '/create-workshop',
+        },
+        Users: {
+            View_Users: '/view-users',
+            Create_Users: '/create-user'
+        },
+        Skills: {
+            All_Skills: '/all-skills',
+            Approve_Skills: '/approve-skills'
+        }
     }
 }
 
@@ -77,6 +93,15 @@ export const userNavMenu = {
         Enrolled_Workshops: '/view-registered-workshops',
         Request_Workshop: '/request-workshop',
         Requested_Skills: '/view-requested-workshops'
+    },
+    'ADMIN': {
+        Home: '/home',
+        Search: '/workshop',
+        Create: '/create-workshop',
+        View_Users: '/view-users',
+        Create_Users: '/create-user',
+        Approve_Skills: '/approve-skills',
+        All_Skills: '/all-skills'
     }
 }
 

@@ -8,5 +8,11 @@ export const componentsMap = {
         '/view-workshop',
         '/view-requested-workshops'
     ],
-    
+    Admin : [
+        '/view-users',
+        '/user',
+        '/approve-skills',
+        '/create-user',
+        '/all-skills'
+    ]
 }

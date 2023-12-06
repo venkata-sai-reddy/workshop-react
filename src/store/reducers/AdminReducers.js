@@ -2,7 +2,9 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     venues: undefined,
-    allUser: []
+    allUser: [],
+    newSkills: [],
+    allSkills: []
 }
 
 export const adminSlice = createSlice({
@@ -14,9 +16,18 @@ export const adminSlice = createSlice({
         },
         saveAllUsers: (state, action) => {
             state.value.allUsers = action.payload.data
+        },
+        saveUserDetails: (state, action) => {
+            state.value.userDetails = action.payload.data;
+        },
+        saveNewSkills: (state, action) => {
+            state.value.newSkills = action.payload.data;
+        },
+        saveAllSkills: (state, action) => {
+            state.value.allSkills = action.payload.data;
         }
     }
 })
 
-export const { saveVenues, saveAllUsers } = adminSlice.actions;
+export const { saveVenues, saveAllUsers, saveUserDetails, saveNewSkills, saveAllSkills } = adminSlice.actions;
 export default adminSlice.reducer;
