@@ -78,7 +78,7 @@ const CreateUserPage = () => {
             <Grid container spacing={3} xs={{ width: '100%' }} justifyContent="center">
                 <Grid item minWidth={'650px'} xs={12} md={6}>
                     <Card elevation={3}>
-                        <CardHeader style={{ position: 'relative', textAlign: 'center' }}
+                        <CardHeader automationId = "admin_create_user_header" style={{ position: 'relative', textAlign: 'center' }}
                             title={'Create User'}
                         >
                         </CardHeader>

@@ -3,18 +3,27 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { forgetPassword } from "../../../store/actions/PreLoginActions";
 import './ForgetPassword.css';
+import { useForm } from "react-hook-form";
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup'
 
 const ForgetPasswordComponent = () => {
 
+    const schema = yup.object().shape({
+        emailId: yup.string().required("Please enter email Id").email("Please enter valid email Id")
+    });
     const [isSubmitting, SetIsSubmitting] = useState(false);
-    const [email, setEmail] = useState();
     const [isSuccess, setIsSuccess] = useState(false);
     const [isError, setIsError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
-    const handleSubmit = async () => {
+    const { register, handleSubmit, formState: { errors } } = useForm({
+        resolver: yupResolver(schema)
+    });
+
+    const onSubmit = async (data) => {
         SetIsSubmitting(true);
         try {
-            const response = await forgetPassword(email);
+            const response = await forgetPassword(data.emailId);
             if (response.data) {
                 setIsError(false);
                 setIsSuccess(true);
@@ -60,7 +69,7 @@ const ForgetPasswordComponent = () => {
                 </Typography>
                 }
                 {!isSuccess && <form
-                    onSubmit={() => handleSubmit()}
+                    onSubmit={handleSubmit(onSubmit)}
                     id="forget_pass_form"
                     className="forget_pass_form"
                     automationId="forget_pass_form"
@@ -76,9 +85,11 @@ const ForgetPasswordComponent = () => {
                         variant="outlined"
                         label="Email Id"
                         placeholder="useremail@email.com"
-                        value={email}
+                        {...register('emailId')}
+                        name="emailId"
+                        error={!!errors.emailId}
+                        helperText={errors.emailId?.message}
                         size="small"
-                        onChange={(e) => setEmail(e.target.value)}
                     />
 
                     <Button

@@ -79,9 +79,9 @@ const RequestWorkshop = ({ open, onClose, handleRequest }) => {
                     }}
                     renderInput={(params) => (
                         <TextField
-                            inputProps={{ automationId: 'req_wrkshp_skills_field' }}
                             variant="standard"
                             {...params}
+                            inputProps={{ automationId: 'req_wrkshp_skills_field', ...params.inputProps }}
                             label="Skills"
                             fullWidth
                         />

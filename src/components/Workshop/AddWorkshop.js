@@ -105,6 +105,7 @@ const AddWorkshop = () => {
             const response = await createWorkshop(data);
             dispatch(addToWorkshops(response));
             toast.success('Workshop Created successfully!', {
+                automationId: 'create_wrkshp_success_toast',
                 position: 'top-right',
                 autoClose: 3000,
                 hideProgressBar: true,
@@ -191,8 +192,8 @@ const AddWorkshop = () => {
                                     renderInput={(params) => (
                                         <TextField
                                             id='create_workshop_skills_field'
-                                            inputProps={{ automationId: 'create_wrkshp_skills_field' }}
                                             {...params}
+                                            inputProps={{ automationId: 'create_wrkshp_skills_field', ...params.inputProps }}
                                             label="Skills *"
                                             error={!!fieldState.error}
                                             helperText={fieldState.error?.message}
@@ -218,8 +219,8 @@ const AddWorkshop = () => {
                                     renderInput={(params) => (
                                         <TextField
                                             id='create_workshop_location_field'
-                                            inputProps={{ automationId: 'create_wrkshp_location_field' }}
                                             {...params}
+                                            inputProps={{ automationId: 'create_wrkshp_location_field', ...params.inputProps }}
                                             label="Location *"
                                             error={!!fieldVenueState.error}
                                             helperText={fieldVenueState.error?.message}

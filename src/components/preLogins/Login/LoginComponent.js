@@ -66,6 +66,7 @@ export const LoginComponent = () => {
                         label="Email Id"
                         placeholder="useremail@email.com"
                         size='small'
+                        name='emailId'
                         error={!!errors.emailId}
                         helperText={errors.emailId?.message}
                         {...register('emailId')}
@@ -103,7 +104,7 @@ export const LoginComponent = () => {
                         First time here? <Link automationId="sign_up_link" to={'/signup'}>Sign Up</Link>
                     </Grid>
                     <Grid item>
-                        <Link to={'/forget-password'}>Forget Password?</Link>
+                        <Link automationId="forget_pass_link" to={'/forget-password'}>Forget Password?</Link>
                     </Grid>
                 </Grid>
             </Grid>

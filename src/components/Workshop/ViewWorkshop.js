@@ -421,7 +421,7 @@ const ViewWorkshop = () => {
 
             </div>
           )}
-          <Typography variant="h4" gutterBottom>
+          <Typography variant="h4"  automationId="wrkshp_title_field" gutterBottom>
             {' '}
             {isEditMode ? (
               <TextField
@@ -440,7 +440,7 @@ const ViewWorkshop = () => {
             )}
           </Typography>
           {!isEditMode && (
-            <Typography variant="subtitle1" color="textSecondary" automationId="wrkshp_title_field" gutterBottom>
+            <Typography variant="subtitle1" color="textSecondary" automationId="wrkshp_instructor_field" gutterBottom>
               Instructor : {workshop.createdUser}
             </Typography>
           )}

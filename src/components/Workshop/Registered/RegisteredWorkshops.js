@@ -137,10 +137,11 @@ export default function RegisteredWorkshops() {
       {
         Header: 'Actions',
         accessor: 'workshopId',
-        Cell: ({ row }) => (
+        Cell: ({ row, ind }) => (
           <IconButton
             aria-label="delete"
             onClick={() => handleDeleteWorkshop(row.original)}
+            automationId={'enrolled_wrkshp_delete_icon_'+row.original.workshopName}
           >
             <DeleteIcon sx={{ color: 'red' }} />
           </IconButton>

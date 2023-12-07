@@ -55,7 +55,7 @@ const HomePage = () => {
                                     <Row className="d-flex justify-content-around">
                                         {sortedWorkshops.slice(index, index + 3).map((item, ind) => (
                                             <Col key={item.workshopId} md={4}>
-                                                <Card style={{ cursor: 'pointer', width: '100%', height: '250px' }} onClick={() => handleCardClick(item)}>
+                                                <Card automationId= {'home_upcmg_wrkshp_'+(index+ind)} style={{ cursor: 'pointer', width: '100%', height: '250px' }} onClick={() => handleCardClick(item)}>
                                                     <Card.Body>
                                                         <Card.Title style={{ padding: '10px', justifyContent: 'space-between' }}>
                                                             <div style={{ justifyContent: 'space-between', display: 'flex', width: '100%' }}>

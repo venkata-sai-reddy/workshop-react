@@ -157,7 +157,7 @@ const SignUpComponent = () => {
                 <Grid container spacing={2}>
                     <Grid item xs={6}>
                         <TextField
-                            label="First Name"
+                            label="First Name*"
                             type="text"
                             id="firstName"
                             className='sign_up_form_fields'
@@ -169,13 +169,13 @@ const SignUpComponent = () => {
                             onBlur={formik.handleBlur}
                             error={formik.touched.firstName && Boolean(formik.errors.firstName)}
                             helperText={formik.touched.firstName && formik.errors.firstName}
-                            required
+
                             fullWidth
                         />
                     </Grid>
                     <Grid item xs={6}>
                         <TextField
-                            label="Last Name"
+                            label="Last Name*"
                             type="text"
                             id="lastName"
                             name="lastName"
@@ -187,7 +187,7 @@ const SignUpComponent = () => {
                             onBlur={formik.handleBlur}
                             error={formik.touched.lastName && Boolean(formik.errors.lastName)}
                             helperText={formik.touched.lastName && formik.errors.lastName}
-                            required
+
                             fullWidth
                         />
                     </Grid>
@@ -199,9 +199,9 @@ const SignUpComponent = () => {
                     id="user_prof_email_id"
                     className='sign_up_form_fields'
                     inputProps={{ automationId: 'sign_up_email_id' }}
-                    label="Email Id"
+                    label="Email Id*"
                     size='small'
-                    required
+
                     value={formik.values.emailId}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -235,6 +235,7 @@ const SignUpComponent = () => {
                                     checked={formik.values.isInstrcutor}
                                     onChange={formik.handleChange}
                                     name="isInstrcutor"
+                                    automationId='sign_up_instructor'
                                     inputProps={{ automationId: 'sign_up_instructor' }}
                                     color="primary"
                                 />
@@ -264,8 +265,8 @@ const SignUpComponent = () => {
                             variant="outlined"
                             id="sign_up_skills"
                             size='small'
-                            inputProps={{ automationId: 'sign_up_skills' }}
                             {...params}
+                            inputProps={{ automationId: 'sign_up_skills', ...params.inputProps }}
                             label="Skills"
                             fullWidth
                         />
@@ -274,7 +275,7 @@ const SignUpComponent = () => {
                 <Grid container spacing={2}>
                     <Grid item xs={6}>
                         <TextField
-                            label="Create Password"
+                            label="Create Password*"
                             type="password"
                             id="createPassword"
                             className='sign_up_form_fields'
@@ -286,13 +287,13 @@ const SignUpComponent = () => {
                             onBlur={formik.handleBlur}
                             error={formik.touched.createPassword && Boolean(formik.errors.createPassword)}
                             helperText={formik.touched.createPassword && formik.errors.createPassword}
-                            required
+
                             fullWidth
                         />
                     </Grid>
                     <Grid item xs={6}>
                         <TextField
-                            label="Confirm Password"
+                            label="Confirm Password*"
                             type="password"
                             id="confirmPassword"
                             name="confirmPassword"
@@ -304,7 +305,7 @@ const SignUpComponent = () => {
                             onBlur={formik.handleBlur}
                             error={formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)}
                             helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
-                            required
+
                             fullWidth
                         />
                     </Grid>

@@ -147,7 +147,7 @@ const ViewUsers = () => {
     return isLoading ? <LoadingPage /> : (
         <Container className='users_page'>
             <Paper elevation={0} sx={{ position: 'relative' }}>
-                <Typography variant="h6" className='users_title_page' sx={{ marginTop: '1rem', marginBottom: '1rem', textAlign: 'center' }}>
+                <Typography variant="h6" className='users_title_page' automationId='admin_all_user_title_page' sx={{ marginTop: '1rem', marginBottom: '1rem', textAlign: 'center' }}>
                     Users
                 </Typography>
                 <div style={{ position: 'absolute', top: 5, right: 10 }}>
