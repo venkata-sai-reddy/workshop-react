@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { TextField, Divider, Button, Typography, Box, Paper, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, CircularProgress } from '@mui/material';
 import { ToastContainer, toast } from 'react-toastify';
-import { sessionUnAuthCheck } from '../../utils/Common';
+import { noSpaceFieldValidation, sessionUnAuthCheck } from '../../utils/Common';
 import { useNavigate } from 'react-router';
 import { changePassword } from '../../store/actions/UserActions';
 
@@ -93,6 +93,7 @@ const ChangePassword = ({ handleClose }) => {
           fullWidth
           margin="normal"
           value={oldPassword}
+          onInput={(e)=>noSpaceFieldValidation(e)}
           inputProps={{automationId:'change_pass_old_pass_field'}}
           onChange={(e) => setOldPassword(e.target.value)}
         />
@@ -103,6 +104,7 @@ const ChangePassword = ({ handleClose }) => {
           fullWidth
           margin="normal"
           value={newPassword}
+          onInput={(e)=>noSpaceFieldValidation(e)}
           inputProps={{automationId:'change_pass_new_pass_field'}}
           onChange={(e) => setNewPassword(e.target.value)}
         />
@@ -113,6 +115,7 @@ const ChangePassword = ({ handleClose }) => {
           fullWidth
           margin="normal"
           value={confirmPassword}
+          onInput={(e)=>noSpaceFieldValidation(e)}
           inputProps={{automationId:'change_pass_confirm_pass_field'}}
           onChange={(e) => setConfirmPassword(e.target.value)}
         />

@@ -32,7 +32,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogActions from '@mui/material/DialogActions';
 import { deleteWorkshop, enrollWorkshop, getWorkshop, unEnrollWorkshop, updateWorkshop } from '../../store/actions/WorkshopActions';
-import { DefaultColumnFilter, convertTimetoLocalDateTime, convertToDateFormat, sessionUnAuthCheck } from '../../utils/Common';
+import { DefaultColumnFilter, convertTimetoLocalDateTime, convertToDateFormat, noTagFieldValidation, sessionUnAuthCheck } from '../../utils/Common';
 import { LoadingPage } from '../Loading/Loading';
 import { saveUpdatedWorkshop, saveWorkshop, updateDeleteWorkshop, updateLocalWorkshop } from '../../store/reducers/WorkshopReducers';
 import NotifyWorkshop from './NotifyWorkshop';
@@ -454,6 +454,7 @@ const ViewWorkshop = () => {
                 inputProps={{ automationId: 'edit_wrkshp_desc_field' }}
                 label="Description"
                 multiline
+                onInput={(e) => noTagFieldValidation(e)}
                 value={updatedWorkshop.description}
                 rows={4}
                 onChange={(e) => handleChange(e.target.name, e.target.value)}
@@ -527,9 +528,9 @@ const ViewWorkshop = () => {
                   options={venues}
                   getOptionLabel={(option) => option.venueName}
                   getOptionSelected={(option, value) => option.venueId === value.venueId}
-                  value={venues.find((venue) => venue.venueName === updatedWorkshop.venue)}
+                  value={venues.find((venue) => venue?.venueName === updatedWorkshop?.venue)}
                   onChange={(e, newValue) => {
-                    handleChange('venue', newValue.venueName);
+                    handleChange('venue', newValue?.venueName);
                   }}
                   renderInput={(params) => (
                     <TextField

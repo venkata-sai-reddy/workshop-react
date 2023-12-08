@@ -16,6 +16,7 @@ import { useFormik } from 'formik';
 import { signUpValidationSchema } from '../../../api/validationSchema';
 import { signUpUser } from '../../../store/actions/PreLoginActions';
 import './SignUpComponent.css'
+import { emailFieldValidation, noSpaceFieldValidation, numericFieldValidation, passwordFieldValidation, textFieldValidation } from '../../../utils/Common';
 
 const SignUpComponent = () => {
     const [formData, setFormData] = useState({
@@ -165,6 +166,7 @@ const SignUpComponent = () => {
                             size='small'
                             inputProps={{ automationId: 'sign_up_first_name' }}
                             value={formik.values.firstName}
+                            onInput={(e) => textFieldValidation(e)}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             error={formik.touched.firstName && Boolean(formik.errors.firstName)}
@@ -182,6 +184,7 @@ const SignUpComponent = () => {
                             className='sign_up_form_fields'
                             size='small'
                             inputProps={{ automationId: 'sign_up_last_name' }}
+                            onInput={(e) => textFieldValidation(e)}
                             value={formik.values.lastName}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
@@ -201,7 +204,7 @@ const SignUpComponent = () => {
                     inputProps={{ automationId: 'sign_up_email_id' }}
                     label="Email Id*"
                     size='small'
-
+                    onInput={(e) => noSpaceFieldValidation(e)}
                     value={formik.values.emailId}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -219,6 +222,7 @@ const SignUpComponent = () => {
                             className='sign_up_form_fields'
                             size='small'
                             inputProps={{ automationId: 'sign_up_phone_number' }}
+                            onInput={(e) => numericFieldValidation(e)}
                             label="Phone Number"
                             value={formik.values.phoneNumber}
                             onChange={formik.handleChange}
@@ -266,6 +270,7 @@ const SignUpComponent = () => {
                             id="sign_up_skills"
                             size='small'
                             {...params}
+                            onInput={(e) => textFieldValidation(e)}
                             inputProps={{ automationId: 'sign_up_skills', ...params.inputProps }}
                             label="Skills"
                             fullWidth
@@ -283,6 +288,7 @@ const SignUpComponent = () => {
                             size='small'
                             inputProps={{ automationId: 'sign_up_create_password' }}
                             value={formik.values.createPassword}
+                            onInput={(e) => noSpaceFieldValidation(e)}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             error={formik.touched.createPassword && Boolean(formik.errors.createPassword)}
@@ -301,6 +307,7 @@ const SignUpComponent = () => {
                             size='small'
                             inputProps={{ automationId: 'sign_up_confirm_password' }}
                             value={formik.values.confirmPassword}
+                            onInput={(e) => noSpaceFieldValidation(e)}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             error={formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)}

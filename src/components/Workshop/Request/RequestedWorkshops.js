@@ -6,12 +6,14 @@ import { getRequestedWorkshops } from '../../../store/actions/WorkshopActions';
 import { saveRequestedSkills } from '../../../store/reducers/WorkshopReducers';
 import { LoadingPage } from '../../Loading/Loading';
 import WorkshopTable from '../WorkshopTable';
-import { DefaultColumnFilter } from '../../../utils/Common';
+import { DefaultColumnFilter, sessionUnAuthCheck } from '../../../utils/Common';
 import { Container } from 'react-bootstrap';
 import { Typography } from '@mui/material';
+import { useNavigate } from 'react-router';
 
 export default function RequestedWorkshops() {
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
   const requestedSkills = useSelector((state) => state?.workshop?.value?.requestedSkills);
@@ -24,6 +26,7 @@ export default function RequestedWorkshops() {
         setIsLoading(false);
       } catch (error) {
         console.error("Error : ", error);
+        sessionUnAuthCheck(error) && navigate('/logout');
         setIsLoading(false);
       }
     };

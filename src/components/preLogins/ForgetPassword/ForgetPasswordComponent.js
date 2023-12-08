@@ -6,6 +6,7 @@ import './ForgetPassword.css';
 import { useForm } from "react-hook-form";
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup'
+import { noSpaceFieldValidation } from "../../../utils/Common";
 
 const ForgetPasswordComponent = () => {
 
@@ -86,6 +87,7 @@ const ForgetPasswordComponent = () => {
                         label="Email Id"
                         placeholder="useremail@email.com"
                         {...register('emailId')}
+                        onInput={(e)=>noSpaceFieldValidation(e)}
                         name="emailId"
                         error={!!errors.emailId}
                         helperText={errors.emailId?.message}

@@ -4,7 +4,7 @@ import { createUserProfile } from "../../../store/actions/AdminActions";
 import { USER_TYPES } from "../../../utils/CommonMessages";
 import { Box, Button, Card, CardContent, CardHeader, FormControl, Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { toast } from "react-toastify";
-import { sessionUnAuthCheck } from "../../../utils/Common";
+import { noSpaceFieldValidation, numericFieldValidation, sessionUnAuthCheck, textFieldValidation } from "../../../utils/Common";
 import { useNavigate } from "react-router";
 import './Users.css';
 
@@ -78,7 +78,7 @@ const CreateUserPage = () => {
             <Grid container spacing={3} xs={{ width: '100%' }} justifyContent="center">
                 <Grid item minWidth={'650px'} xs={12} md={6}>
                     <Card elevation={3}>
-                        <CardHeader automationId = "admin_create_user_header" style={{ position: 'relative', textAlign: 'center' }}
+                        <CardHeader automationId="admin_create_user_header" style={{ position: 'relative', textAlign: 'center' }}
                             title={'Create User'}
                         >
                         </CardHeader>
@@ -96,6 +96,7 @@ const CreateUserPage = () => {
                                                 className='create_user_form_fields'
                                                 name="firstName"
                                                 size='small'
+                                                onInput={(e) => textFieldValidation(e)}
                                                 inputProps={{ automationId: 'create_user_first_name' }}
                                                 value={formik.values.firstName}
                                                 onChange={formik.handleChange}
@@ -114,6 +115,7 @@ const CreateUserPage = () => {
                                                 name="lastName"
                                                 className='create_user_form_fields'
                                                 size='small'
+                                                onInput={(e) => textFieldValidation(e)}
                                                 inputProps={{ automationId: 'create_user_last_name' }}
                                                 value={formik.values.lastName}
                                                 onChange={formik.handleChange}
@@ -135,6 +137,7 @@ const CreateUserPage = () => {
                                         label="Email Id"
                                         size='small'
                                         required
+                                        onInput={(e) => noSpaceFieldValidation(e)}
                                         value={formik.values.emailId}
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
@@ -153,6 +156,7 @@ const CreateUserPage = () => {
                                                 size='small'
                                                 inputProps={{ automationId: 'create_user_phone_number' }}
                                                 label="Phone Number"
+                                                onInput={(e) => numericFieldValidation(e)}
                                                 value={formik.values.phoneNumber}
                                                 onChange={formik.handleChange}
                                                 onBlur={formik.handleBlur}
@@ -190,16 +194,28 @@ const CreateUserPage = () => {
                                         </Grid>
                                     </Grid>
 
-                                    <Button
-                                        type="submit"
-                                        variant="contained"
-                                        color="primary"
-                                        id="create_user_form_submit"
-                                        automationId="create_user_form_submit"
-                                        style={{ marginTop: '16px' }}
-                                    >
-                                        Create User
-                                    </Button>
+                                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly' }}>
+                                        <Button
+                                            type="submit"
+                                            variant="contained"
+                                            color="primary"
+                                            id="create_user_form_submit"
+                                            automationId="create_user_form_submit"
+                                            style={{ marginTop: '16px' }}
+                                        >
+                                            Create User
+                                        </Button>
+                                        <Button
+                                            variant="contained"
+                                            color="error"
+                                            id="create_user_form_clear"
+                                            automationId="create_user_form_clear"
+                                            style={{ marginTop: '16px' }}
+                                            onClick={() => formik.resetForm()}
+                                        >
+                                            CLear
+                                        </Button>
+                                    </div>
                                 </form>
                             </div>
                         </CardContent>

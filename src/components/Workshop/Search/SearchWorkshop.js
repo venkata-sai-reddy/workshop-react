@@ -4,13 +4,15 @@ import { getAllWorkshops } from '../../../store/actions/WorkshopActions';
 import { saveAllWorkshops } from '../../../store/reducers/WorkshopReducers';
 import { LoadingPage } from '../../Loading/Loading';
 import WorkshopTable from '../WorkshopTable';
-import { DefaultColumnFilter, getTimelineStatus } from '../../../utils/Common';
+import { DefaultColumnFilter, getTimelineStatus, sessionUnAuthCheck } from '../../../utils/Common';
 import { Container } from 'react-bootstrap';
 import { Typography } from '@mui/material';
+import { useNavigate } from 'react-router';
 
 export default function SearchWorkshop() {
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const allWorkshops = useSelector((state) => state?.workshop?.value?.allWorkshops);
 
@@ -22,6 +24,7 @@ export default function SearchWorkshop() {
         setIsLoading(false);
       } catch (error) {
         console.error("Error : ", error);
+        sessionUnAuthCheck(error) && navigate('/logout');
         setIsLoading(false);
       }
     };

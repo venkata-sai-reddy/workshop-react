@@ -9,11 +9,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getSkills } from '../../../store/actions/AdminActions';
 import { Autocomplete, TextField } from '@mui/material';
 import { LoadingPage } from '../../Loading/Loading';
+import { sessionUnAuthCheck, textFieldValidation } from '../../../utils/Common';
+import { useNavigate } from 'react-router';
 
 const RequestWorkshop = ({ open, onClose, handleRequest }) => {
     const [selectedSkill, setSelectedSkill] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const allSkills = useSelector((state) => state?.skills?.value?.allSkills);
 
@@ -25,6 +28,7 @@ const RequestWorkshop = ({ open, onClose, handleRequest }) => {
                 setIsLoading(false);
             } catch (error) {
                 console.error("Error : ", error);
+                sessionUnAuthCheck(error) && navigate('/logout');
                 setIsLoading(false);
             }
         };
@@ -81,6 +85,7 @@ const RequestWorkshop = ({ open, onClose, handleRequest }) => {
                         <TextField
                             variant="standard"
                             {...params}
+                            onInput={(e)=>textFieldValidation(e)}
                             inputProps={{ automationId: 'req_wrkshp_skills_field', ...params.inputProps }}
                             label="Skills"
                             fullWidth

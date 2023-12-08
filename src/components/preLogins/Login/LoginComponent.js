@@ -9,6 +9,7 @@ import { doLogin } from '../../../store/actions/PreLoginActions'
 import { useDispatch } from 'react-redux';
 import { saveUser } from '../../../store/reducers/UserReducers'
 import ChangePass from './ChangePass';
+import { noSpaceFieldValidation } from '../../../utils/Common';
 
 export const LoginComponent = () => {
     const schema = yup.object().shape({
@@ -67,6 +68,7 @@ export const LoginComponent = () => {
                         placeholder="useremail@email.com"
                         size='small'
                         name='emailId'
+                        onInput={(e)=>noSpaceFieldValidation(e)}
                         error={!!errors.emailId}
                         helperText={errors.emailId?.message}
                         {...register('emailId')}
@@ -84,6 +86,7 @@ export const LoginComponent = () => {
                         type="password"
                         size="small"
                         placeholder="********"
+                        onInput={(e)=>noSpaceFieldValidation(e)}
                         error={!!errors.password}
                         helperText={errors.password?.message}
                         {...register('password')}

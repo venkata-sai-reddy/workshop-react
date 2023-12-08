@@ -2,15 +2,17 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { LoadingPage } from '../../Loading/Loading';
 import WorkshopTable from '../WorkshopTable';
-import { DefaultColumnFilter } from '../../../utils/Common';
+import { DefaultColumnFilter, sessionUnAuthCheck } from '../../../utils/Common';
 import { Container } from 'react-bootstrap';
 import { Typography } from '@mui/material';
 import { getAllUserRequestedWorkshops } from '../../../store/actions/AdminActions';
 import { saveAllUserRequestedSkills } from '../../../store/reducers/AdminReducers';
+import { useNavigate } from 'react-router';
 
 export default function UserRequestedWorkshops() {
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const requestedSkills = useSelector((state) => state?.admin?.value?.allRequestedWorkshops);
 
@@ -22,6 +24,7 @@ export default function UserRequestedWorkshops() {
         setIsLoading(false);
       } catch (error) {
         console.error("Error : ", error);
+        sessionUnAuthCheck(error) && navigate('/logout');
         setIsLoading(false);
       }
     };

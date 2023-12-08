@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { LoadingPage } from '../../Loading/Loading';
-import { DefaultColumnFilter, sessionUnAuthCheck } from '../../../utils/Common';
+import { DefaultColumnFilter, sessionUnAuthCheck, textFieldValidation } from '../../../utils/Common';
 import { Container } from 'react-bootstrap';
 import { Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Paper, TextField, Typography } from '@mui/material';
 import { addNewSkills, getAllSkills, updateApprovedSkill } from '../../../store/actions/AdminActions';
@@ -276,6 +276,7 @@ const SkillsPage = () => {
                                 variant="standard"
                                 {...params}
                                 label="Skills"
+                                onInput={(e) => textFieldValidation(e)}
                                 fullWidth
                                 inputProps={{automationId: 'admin_sp_add_skills_field'}}
                             />

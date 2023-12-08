@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router";
-import { getUserProfile } from "../../../store/actions/UserActions";
+import { useLocation } from "react-router";
 import { saveUserDetails } from "../../../store/reducers/AdminReducers";
 import { getUserDetails } from "../../../store/actions/AdminActions";
 import { LoadingPage } from "../../Loading/Loading";
@@ -13,12 +12,8 @@ const UserPage = () => {
 
   const location = useLocation();
   const { userId } = location.state || {};
-  const [isEditMode, setIsEditMode] = useState(false);
-  const [isEdited, setIsEdited] = useState(false);
   const userDetails = useSelector((state) => state.admin.value.userDetails);
-  const [updatedUserDetails, setUpdateduserDetails] = useState(undefined);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
 
 

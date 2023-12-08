@@ -36,7 +36,7 @@ import '../../Profile/Profile.css'
 import { LoadingPage } from '../../Loading/Loading';
 import { generateTemporaryPassword, getSkills } from '../../../store/actions/AdminActions';
 import { ToastContainer, toast } from 'react-toastify';
-import { sessionUnAuthCheck } from '../../../utils/Common';
+import { noSpaceFieldValidation, numericFieldValidation, sessionUnAuthCheck, textFieldValidation } from '../../../utils/Common';
 import { useNavigate } from 'react-router';
 import { updateUserProfile } from '../../../store/actions/AdminActions';
 import { USER_TYPES } from '../../../utils/CommonMessages';
@@ -252,6 +252,7 @@ const UserProfilePage = ({ user }) => {
                                             variant="outlined"
                                             fullWidth
                                             id="user_prof_first_name"
+                                            onInput={(e) => textFieldValidation(e)}
                                             inputProps={{ automationId: 'admin_edit_user_prof_first_name' }}
                                             label="First Name"
                                             style={{ paddingLeft: '10px', paddingRight: '10px' }}
@@ -263,6 +264,7 @@ const UserProfilePage = ({ user }) => {
                                             variant="outlined"
                                             fullWidth
                                             id="user_prof_last_name"
+                                            onInput={(e) => textFieldValidation(e)}
                                             inputProps={{ automationId: 'admin_edit_user_prof_last_name' }}
                                             label="last Name"
                                             style={{ paddingLeft: '10px', paddingRight: '10px' }}
@@ -351,6 +353,7 @@ const UserProfilePage = ({ user }) => {
                                             style={{ paddingLeft: '10px', paddingRight: '10px' }}
                                             inputProps={{ automationId: 'admin_edit_user_prof_email_id' }}
                                             label="Email Id"
+                                            onInput={(e) => noSpaceFieldValidation(e)}
                                             value={userProf.emailId}
                                             disabled
                                             onChange={(e) => handleChange(e.target.name, e.target.value)}
@@ -364,6 +367,7 @@ const UserProfilePage = ({ user }) => {
                                             inputProps={{ automationId: 'admin_edit_user_prof_phone_number' }}
                                             label="Phone Number"
                                             value={userProf.phoneNumber}
+                                            onInput={(e) => numericFieldValidation(e)}
                                             onChange={(e) => handleChange(e.target.name, e.target.value)}
                                         />
                                     </div>
@@ -400,6 +404,7 @@ const UserProfilePage = ({ user }) => {
                                             <TextField
                                                 variant="standard"
                                                 id="edit_user_prof_skills"
+                                                onInput={(e) => textFieldValidation(e)}
                                                 inputProps={{ automationId: 'admin_edit_user_prof_skills' }}
                                                 {...params}
                                                 label="Skills"

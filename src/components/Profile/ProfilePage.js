@@ -32,7 +32,7 @@ import { LoadingPage } from '../Loading/Loading';
 import { getSkills } from '../../store/actions/AdminActions';
 import { ToastContainer, toast } from 'react-toastify';
 import { updateUserProfile } from '../../store/actions/UserActions';
-import { sessionUnAuthCheck } from '../../utils/Common';
+import { noSpaceFieldValidation, numericFieldValidation, sessionUnAuthCheck, textFieldValidation } from '../../utils/Common';
 import { useNavigate } from 'react-router';
 
 const ProfilePage = ({ user, isPasswordShow, handleShowPassword }) => {
@@ -187,6 +187,7 @@ const ProfilePage = ({ user, isPasswordShow, handleShowPassword }) => {
                       variant="outlined"
                       fullWidth
                       id="user_prof_first_name"
+                      onInput={(e)=>textFieldValidation(e)}
                       inputProps={{ automationId: 'edit_user_prof_first_name' }}
                       label="First Name"
                       style={{ paddingLeft: '10px', paddingRight: '10px' }}
@@ -198,6 +199,7 @@ const ProfilePage = ({ user, isPasswordShow, handleShowPassword }) => {
                       variant="outlined"
                       fullWidth
                       id="user_prof_last_name"
+                      onInput={(e)=>textFieldValidation(e)}
                       inputProps={{ automationId: 'edit_user_prof_last_name' }}
                       label="last Name"
                       style={{ paddingLeft: '10px', paddingRight: '10px' }}
@@ -227,6 +229,7 @@ const ProfilePage = ({ user, isPasswordShow, handleShowPassword }) => {
                       fullWidth
                       style={{ paddingLeft: '10px', paddingRight: '10px' }}
                       inputProps={{ automationId: 'edit_user_prof_email_id' }}
+                      onInput={(e)=>noSpaceFieldValidation(e)}
                       label="Email Id"
                       value={userProf.emailId}
                       disabled
@@ -236,6 +239,7 @@ const ProfilePage = ({ user, isPasswordShow, handleShowPassword }) => {
                       name="phoneNumber"
                       variant="outlined"
                       id="user_prof_phone_number"
+                      onInput={(e)=>numericFieldValidation(e)}
                       fullWidth
                       style={{ paddingLeft: '10px', paddingRight: '10px' }}
                       inputProps={{ automationId: 'edit_user_prof_phone_number' }}
@@ -279,6 +283,7 @@ const ProfilePage = ({ user, isPasswordShow, handleShowPassword }) => {
                         id="edit_user_prof_skills"
                         inputProps={{ automationId: 'edit_user_prof_skills' }}
                         {...params}
+                        onInput={(e)=>textFieldValidation(e)}
                         label="Skills"
                         fullWidth
                       />

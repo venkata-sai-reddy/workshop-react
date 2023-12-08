@@ -119,3 +119,47 @@ export const displayName = (name) => {
     return name;
   }
 }
+
+export const textFieldValidation = (field) => {
+  const value  = field.target.value.slice(0, -1);
+  if (value === ''){
+    field.target.value = field.target.value.replace(/[^A-Za-z]/g, '')
+  } else if (field.target.value.charAt(field.target.value.length -1) === ' ' && value.charAt(value.length - 1) === ' ' ) {
+    field.target.value = field.target.value.slice(0, -1);
+  } else {
+    field.target.value = field.target.value.replace(/[^A-Za-z ]/g, '')
+  }
+}
+
+export const numericFieldValidation = (field) => {
+  const value  = field.target.value.slice(0, -1);
+  if (value === ''){
+    field.target.value = field.target.value.replace(/[^0-9]/g, '')
+  } else if ((field.target.value.charAt(field.target.value.length -1) === ' ' && value.charAt(value.length - 1) === ' ') 
+  || field.target.value.length > 10) {
+    field.target.value = field.target.value.slice(0, -1);
+  } else {
+    field.target.value = field.target.value.replace(/[^0-9 ]/g, '')
+  }
+}
+
+export const alphaNumericValidation = (field) => {
+  const value  = field.target.value.slice(0, -1);
+  if (value === ''){
+    field.target.value = field.target.value.replace(/[^A-Za-z0-9]/g, '')
+  } else if (field.target.value.charAt(field.target.value.length -1) === ' ' && value.charAt(value.length - 1) === ' ' ) {
+    field.target.value = field.target.value.slice(0, -1);
+  } else {
+    field.target.value = field.target.value.replace(/[^A-Za-z0-9 ]/g, '')
+  }
+}
+
+export const noSpaceFieldValidation = (field) => {
+  if (field.target.value.charAt(field.target.value.length -1) === ' ') {
+    field.target.value = field.target.value.slice(0, -1);
+  }
+}
+
+export const noTagFieldValidation = (field) => {
+  field.target.value = field.target.value.replace(/[<>]/g, '');
+}

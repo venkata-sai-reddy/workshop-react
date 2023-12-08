@@ -11,7 +11,7 @@ import {
 } from 'react-toastify';
 import { useNavigate } from 'react-router';
 import { changePassword } from '../../../store/actions/UserActions';
-import { sessionUnAuthCheck } from '../../../utils/Common';
+import { noSpaceFieldValidation, sessionUnAuthCheck } from '../../../utils/Common';
 
 const ChangePass = ({ open, handleClose }) => {
 
@@ -90,6 +90,7 @@ const ChangePass = ({ open, handleClose }) => {
                     fullWidth
                     margin="normal"
                     value={tempPassword}
+                    onInput={(e)=>noSpaceFieldValidation(e)}
                     onChange={(e) => setTempPassword(e.target.value)}
                 />
                 <TextField
@@ -99,6 +100,7 @@ const ChangePass = ({ open, handleClose }) => {
                     fullWidth
                     margin="normal"
                     value={newPassword}
+                    onInput={(e)=>noSpaceFieldValidation(e)}
                     onChange={(e) => setNewPassword(e.target.value)}
                 />
                 <TextField
@@ -108,6 +110,7 @@ const ChangePass = ({ open, handleClose }) => {
                     fullWidth
                     margin="normal"
                     value={confirmPassword}
+                    onInput={(e)=>noSpaceFieldValidation(e)}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                 />
             </DialogContent>

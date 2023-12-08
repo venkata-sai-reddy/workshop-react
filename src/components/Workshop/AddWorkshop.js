@@ -20,7 +20,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingPage } from '../Loading/Loading';
 import { getVenues } from '../../store/actions/AdminActions'
 import { saveVenues } from '../../store/reducers/AdminReducers';
-import { convertTimetoLocalDateTime, convertToDateFormat, sessionUnAuthCheck } from '../../utils/Common';
+import { alphaNumericValidation, convertTimetoLocalDateTime, convertToDateFormat, numericFieldValidation, sessionUnAuthCheck, textFieldValidation } from '../../utils/Common';
 import { createWorkshop } from '../../store/actions/WorkshopActions';
 import {
     ToastContainer,
@@ -46,6 +46,7 @@ const AddWorkshop = () => {
                 setIsLoading(false);
             } catch (error) {
                 console.error("Error : ", error);
+                sessionUnAuthCheck(error) && navigate('/logout');
                 setIsLoading(false);
             }
         };
@@ -148,6 +149,7 @@ const AddWorkshop = () => {
                                     id='create_workshop_title_field'
                                     inputProps={{ automationId: 'create_wrkshp_title_field' }}
                                     label="Workshop Title *"
+                                    onInput={(e)=> alphaNumericValidation(e)}
                                     {...register('workshopName', { required: 'Title is required' })}
                                     error={!!errors.workshopName}
                                     helperText={errors.workshopName?.message}
@@ -195,6 +197,7 @@ const AddWorkshop = () => {
                                             {...params}
                                             inputProps={{ automationId: 'create_wrkshp_skills_field', ...params.inputProps }}
                                             label="Skills *"
+                                            onInput={(e) => textFieldValidation(e)}
                                             error={!!fieldState.error}
                                             helperText={fieldState.error?.message}
                                             fullWidth
@@ -222,6 +225,7 @@ const AddWorkshop = () => {
                                             {...params}
                                             inputProps={{ automationId: 'create_wrkshp_location_field', ...params.inputProps }}
                                             label="Location *"
+                                            onInput={(e) => alphaNumericValidation(e)}
                                             error={!!fieldVenueState.error}
                                             helperText={fieldVenueState.error?.message}
                                             fullWidth
@@ -239,6 +243,7 @@ const AddWorkshop = () => {
                                     label="Capacity"
                                     type="number"
                                     {...register('capacity')}
+                                    onInput={(e) => numericFieldValidation(e)}
                                     error={!!errors.capacity}
                                     helperText={errors.capacity?.message}
                                 />

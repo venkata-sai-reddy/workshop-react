@@ -9,11 +9,14 @@ import {
     toast,
 } from 'react-toastify';
 import { sendCustomNotifyMessage } from '../../store/actions/AdminActions';
+import { sessionUnAuthCheck } from '../../utils/Common';
+import { useNavigate } from 'react-router';
 
 const NotifyWorkshop = ({ open, onClose, workshopId }) => {
 
     const [message, setMessage] = useState({});
 
+    const navigate = useNavigate();
     const handleCancel = () => {
         onClose();
     };
@@ -53,6 +56,7 @@ const NotifyWorkshop = ({ open, onClose, workshopId }) => {
                 onClose();
             }
         } catch (error) {
+            sessionUnAuthCheck(error) && navigate('/logout');
             toast.error('Notification Failed to Sent', {
                 position: 'top-right',
                 autoClose: 3000,
