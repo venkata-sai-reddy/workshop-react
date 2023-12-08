@@ -129,3 +129,13 @@ export const getAllSkills = async () => {
     });
     return response;
 }
+
+export const getAllUserRequestedWorkshops = async () => {
+    const response = await axios.get(APP_BASE_URL + AdminApis.userRequestedWorkshopsEndPoint, {
+        headers: {
+            'Content-Type': 'application/json',
+            'sessionid': localStorage.getItem('sessionid')
+        },
+    })
+    return response;
+}

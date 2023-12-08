@@ -4,7 +4,8 @@ const initialState = {
     venues: undefined,
     allUser: [],
     newSkills: [],
-    allSkills: []
+    allSkills: [],
+    allRequestedWorkshops: []
 }
 
 export const adminSlice = createSlice({
@@ -25,9 +26,12 @@ export const adminSlice = createSlice({
         },
         saveAllSkills: (state, action) => {
             state.value.allSkills = action.payload.data;
+        },
+        saveAllUserRequestedSkills: (state, action) => {
+            state.value.allRequestedWorkshops = action.payload.data;
         }
     }
 })
 
-export const { saveVenues, saveAllUsers, saveUserDetails, saveNewSkills, saveAllSkills } = adminSlice.actions;
+export const { saveVenues, saveAllUsers, saveUserDetails, saveNewSkills, saveAllSkills, saveAllUserRequestedSkills } = adminSlice.actions;
 export default adminSlice.reducer;

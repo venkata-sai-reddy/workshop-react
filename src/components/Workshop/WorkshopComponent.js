@@ -4,6 +4,7 @@ import SearchWorkshop from "./Search/SearchWorkshop";
 import ViewWorkshop from "./ViewWorkshop";
 import './Workshop.css';
 import RequestedWorkshops from "./Request/RequestedWorkshops";
+import UserRequestedWorkshops from "./Request/UserRequestedWorkshops";
 
 const WorkshopComponent = (props) => {
 
@@ -19,7 +20,9 @@ const WorkshopComponent = (props) => {
         return(<ViewWorkshop />);
     } else if(path === '/view-requested-workshops') {
         return(<RequestedWorkshops />);
-    } else  {
+    } else if(path === '/workshop-requests') {
+        return(<UserRequestedWorkshops />);
+    } else {
         return(<div>Workshop Component {path}</div>);
     }
 }

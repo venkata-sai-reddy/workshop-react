@@ -50,6 +50,7 @@ export const PrivateRouter = () => {
             <Route path="/profile" exact element={<HomeComponent path='/profile' />} />
             <Route path="/view-users" exact element={<HomeComponent path='/view-users' />} />
             <Route path="/create-user" exact element={<HomeComponent path='/create-user' />} />
+            <Route path="/workshop-requests" exact element={<HomeComponent path='/workshop-requests' />} />
             <Route path="/user" exact element={<HomeComponent path='/user' />} />
             <Route path="/approve-skills" exact element={<HomeComponent path='/approve-skills' />} />
             <Route path="/all-skills" exact element={<HomeComponent path='/all-skills' />} />

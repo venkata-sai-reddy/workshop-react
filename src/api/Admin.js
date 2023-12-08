@@ -11,5 +11,6 @@ export const AdminApis={
     userDetailsEndPoint: '/admin/user',
     tempPasswordEndPoint: '/admin/temppassword',
     addNewSkillsEndPoint: '/admin/skills/add',
-    allSkillsEndPoint: '/admin/skills/all'
+    allSkillsEndPoint: '/admin/skills/all',
+    userRequestedWorkshopsEndPoint: '/admin/request/workshops'
 }

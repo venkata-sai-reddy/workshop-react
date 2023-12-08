@@ -55,6 +55,7 @@ export const userNavLeftPages = {
             View: '/workshop',
             Create: '/create-workshop',
             Request_Workshop: '/request-workshop',
+            User_Requests: '/workshop-requests',
         },
         Activity: {
             Enrolled_Workshops: '/view-registered-workshops',
@@ -66,6 +67,7 @@ export const userNavLeftPages = {
         Workshop: {
             View: '/workshop',
             Create: '/create-workshop',
+            User_Requests: '/workshop-requests',
         },
         Users: {
             View_Users: '/view-users',
@@ -92,7 +94,8 @@ export const userNavMenu = {
         Create: '/create-workshop',
         Enrolled_Workshops: '/view-registered-workshops',
         Request_Workshop: '/request-workshop',
-        Requested_Skills: '/view-requested-workshops'
+        Requested_Skills: '/view-requested-workshops',
+        User_Requests: '/workshop-requests',
     },
     'ADMIN': {
         Home: '/home',
@@ -100,6 +103,7 @@ export const userNavMenu = {
         Create: '/create-workshop',
         View_Users: '/view-users',
         Create_Users: '/create-user',
+        User_Requests: '/workshop-requests',
         Approve_Skills: '/approve-skills',
         All_Skills: '/all-skills'
     }
