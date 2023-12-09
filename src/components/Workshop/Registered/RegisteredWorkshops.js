@@ -36,6 +36,7 @@ export default function RegisteredWorkshops() {
         setIsLoading(false)
       } catch (error) {
         console.error("Error : ", error);
+        sessionUnAuthCheck(error) && navigate('/logout');
         setIsLoading(false);
       }
     };
